@@ -1,0 +1,5 @@
+port: 8080
+profile: k8s
+image:
+  name: romanowalex/backend-todo-list
+  version: v1.0
