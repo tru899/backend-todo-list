@@ -19,6 +19,8 @@ spec:
           env:
             - name: SPRING_PROFILES_ACTIVE
               value: k8s
+            - name: SERVLET_PATH
+              value: {{ .Values.path }}
           ports:
             - name: web
               containerPort: {{ .Values.port }}
