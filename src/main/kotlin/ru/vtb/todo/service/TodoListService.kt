@@ -5,7 +5,7 @@ import ru.vtb.todo.model.ListItem
 import java.util.*
 
 interface TodoListService {
-    fun findAll(): List<ListItem>
-    fun create(request: CreateItemRequest)
-    fun delete(uid: UUID)
+    fun findAll(userId: String): List<ListItem>
+    fun create(userId: String, request: CreateItemRequest)
+    fun delete(userId: String, uid: UUID)
 }

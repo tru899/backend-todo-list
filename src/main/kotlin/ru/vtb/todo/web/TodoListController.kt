@@ -1,16 +1,19 @@
 package ru.vtb.todo.web
 
 import io.swagger.v3.oas.annotations.Operation
+import io.swagger.v3.oas.annotations.enums.SecuritySchemeType
 import io.swagger.v3.oas.annotations.headers.Header
 import io.swagger.v3.oas.annotations.media.ArraySchema
 import io.swagger.v3.oas.annotations.media.Content
 import io.swagger.v3.oas.annotations.media.Schema
 import io.swagger.v3.oas.annotations.responses.ApiResponse
+import io.swagger.v3.oas.annotations.security.SecurityScheme
 import io.swagger.v3.oas.annotations.tags.Tag
 import org.springframework.http.HttpStatus
 import org.springframework.http.MediaType
 import org.springframework.http.ResponseEntity
 import org.springframework.http.ResponseEntity.created
+import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder.fromCurrentRequest
 import ru.vtb.todo.model.CreateItemRequest
@@ -25,6 +28,7 @@ import javax.validation.Valid
     name = "TODO list Controller",
     description = "Операции создания, получения списка и удаления над записями TODO-листа"
 )
+@SecurityScheme(type = SecuritySchemeType.OAUTH2)
 @RestController
 @RequestMapping("/api/v1/public/items")
 class TodoListController(
@@ -44,7 +48,9 @@ class TodoListController(
         ]
     )
     @GetMapping(produces = [MediaType.APPLICATION_JSON_VALUE])
-    fun items(): List<ListItem> = todoListService.findAll()
+    fun items(token: OAuth2AuthenticationToken): List<ListItem> {
+        return todoListService.findAll(token.principal.name)
+    }
 
     @Operation(
         summary = "Создание новой запсии",
@@ -73,8 +79,8 @@ class TodoListController(
         ]
     )
     @PostMapping(consumes = [MediaType.APPLICATION_JSON_VALUE])
-    fun create(@Valid @RequestBody request: CreateItemRequest): ResponseEntity<Void> {
-        todoListService.create(request)
+    fun create(token: OAuth2AuthenticationToken, @Valid @RequestBody request: CreateItemRequest): ResponseEntity<Void> {
+        todoListService.create(token.principal.name, request)
         return created(fromCurrentRequest().build().toUri()).build()
     }
 
@@ -84,7 +90,7 @@ class TodoListController(
     )
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping("/{uid}")
-    fun delete(@PathVariable uid: UUID) {
-        todoListService.delete(uid)
+    fun delete(token: OAuth2AuthenticationToken, @PathVariable uid: UUID) {
+        todoListService.delete(token.principal.name, uid)
     }
 }

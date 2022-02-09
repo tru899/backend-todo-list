@@ -13,7 +13,7 @@ plugins {
 ext {
     guavaVersion = "30.1.1-jre"
     openApiVersion = "1.5.10"
-    postgresContainerVersion = "1.15.2"
+    postgresContainerVersion = "1.16.0"
 }
 
 idea {
@@ -33,6 +33,7 @@ dependencies {
     implementation "org.springframework.boot:spring-boot-starter-actuator"
     implementation "org.springframework.boot:spring-boot-starter-validation"
     implementation "org.springframework.boot:spring-boot-starter-logging"
+    implementation "org.springframework.boot:spring-boot-starter-oauth2-client"
 
     implementation "org.postgresql:postgresql"
     implementation "org.flywaydb:flyway-core"

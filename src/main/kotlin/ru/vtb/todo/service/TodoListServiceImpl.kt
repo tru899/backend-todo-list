@@ -1,5 +1,6 @@
 package ru.vtb.todo.service
 
+import org.springframework.data.domain.Example
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import ru.vtb.todo.domain.Item
@@ -15,22 +16,24 @@ class TodoListServiceImpl(
 ) : TodoListService {
 
     @Transactional(readOnly = true)
-    override fun findAll() = itemRepository
-        .findAll()
+    override fun findAll(userId: String) = itemRepository
+        .findAll(Example.of(Item(userId = userId)))
         .map { ListItem(uid = it.id!!, text = it.text!!) }
 
     @Transactional
-    override fun create(request: CreateItemRequest) {
+    override fun create(userId: String, request: CreateItemRequest) {
         val id = request.uid
         if (itemRepository.findById(id!!).isPresent) {
             throw ItemAlreadyExistsException("Item $id already exists")
         }
-        val item = Item(id = id, text = request.text)
+        val item = Item(id = id, text = request.text, userId = userId)
         itemRepository.save(item)
     }
 
     @Transactional
-    override fun delete(uid: UUID) {
-        itemRepository.deleteById(uid)
+    override fun delete(userId: String, uid: UUID) {
+        if (itemRepository.exists(Example.of(Item(id = uid, userId = userId)))) {
+            itemRepository.deleteById(uid)
+        }
     }
 }
