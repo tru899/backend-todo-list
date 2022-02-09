@@ -17,8 +17,13 @@ server:
     session:
       cookie:
         http-only: off
+        max-age: 86400
 
 management:
+  credentials:
+    user: management
+    password: test
+    role: MANAGEMENT
   endpoints:
     web:
       base-path: /manage
