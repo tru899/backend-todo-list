@@ -6,12 +6,18 @@ spec:
   replicas: 1
   selector:
     matchLabels:
-      app: {{ .Chart.Name }}
+      app.kubernetes.io/name: {{ .Chart.Name }}
   template:
     metadata:
       labels:
-        app: {{ .Chart.Name }}
+        app.kubernetes.io/name: {{ .Chart.Name }}
+        app.kubernetes.io/version: "{{ .Chart.Version }}"
+        app.kubernetes.io/component: spring
     spec:
+      {{ if .Values.image.private }}
+      imagePullSecrets:
+        - name: private-registry
+      {{ end }}
       containers:
         - name: {{ .Chart.Name }}
           image: {{ .Values.image.name }}:{{ .Values.image.version }}
@@ -21,6 +27,16 @@ spec:
               value: k8s
             - name: SERVLET_PATH
               value: {{ .Values.path }}
+            - name: GOOGLE_CLIENT_ID
+              valueFrom:
+                secretKeyRef:
+                  name: credentials
+                  key: google-client-id
+            - name: GOOGLE_CLIENT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: credentials
+                  key: google-client-secret
           ports:
             - name: web
               containerPort: {{ .Values.port }}

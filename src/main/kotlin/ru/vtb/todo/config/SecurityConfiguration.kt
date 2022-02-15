@@ -1,7 +1,6 @@
 package ru.vtb.todo.config
 
 import org.springframework.boot.actuate.autoconfigure.security.servlet.EndpointRequest.toAnyEndpoint
-import org.springframework.boot.actuate.health.HealthEndpoint
 import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration

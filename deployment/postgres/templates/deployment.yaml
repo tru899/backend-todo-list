@@ -6,11 +6,13 @@ spec:
   replicas: 1
   selector:
     matchLabels:
-      app: {{ .Chart.Name }}
+      app.kubernetes.io/name: {{ .Chart.Name }}
   template:
     metadata:
       labels:
-        app: {{ .Chart.Name }}
+        app.kubernetes.io/name: {{ .Chart.Name }}
+        app.kubernetes.io/version: "{{ .Chart.Version }}"
+        app.kubernetes.io/component: database
     spec:
       containers:
         - name: {{ .Chart.Name }}
@@ -30,4 +32,4 @@ spec:
               mountPath: /var/lib/pgsql/data
       volumes:
         - name: db-data
-          emptyDir: {}
+          emptyDir: { }

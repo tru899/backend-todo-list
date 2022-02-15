@@ -1,7 +1,7 @@
+server:
+  servlet:
+    context-path: ${SERVLET_PATH:/backend}
 spring:
-  mvc:
-    servlet:
-      path: ${SERVLET_PATH:/backend}
   datasource:
     url: jdbc:postgresql://postgres-service:5432/todo_list
     username: program
