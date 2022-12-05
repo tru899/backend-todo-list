@@ -1,9 +1,9 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ .Chart.Name }}-service
+  name: {{ .Chart.Name }}
   labels:
-    app.kubernetes.io/name: {{ .Chart.Name }}-service
+    app.kubernetes.io/name: {{ .Chart.Name }}
     app.kubernetes.io/version: "{{ .Values.image.version }}"
     app.kubernetes.io/component: application
     app.kubernetes.io/part-of: person-service
