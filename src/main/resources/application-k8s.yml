@@ -3,9 +3,9 @@ server:
     context-path: ${SERVLET_PATH:/backend}
 spring:
   datasource:
-    url: jdbc:postgresql://postgres-service:5432/todo_list
-    username: program
-    password: test
+    url: jdbc:postgresql://${DATABASE_URL:postgres-service}:${DATABASE_PORT:5432}/${DATABASE_NAME:todo_list}
+    username: ${DATABASE_USER:program}
+    password: ${DATABASE_PASSWORD:test}
     driver-class-name: org.postgresql.Driver
   jpa:
     hibernate:

@@ -28,7 +28,7 @@ import javax.validation.Valid
 @RestController
 @RequestMapping("/api/v1/public/items")
 class TodoListController(
-    private val todoListService: TodoListService
+    private val todoListService: TodoListService,
 ) {
     @Operation(
         summary = "Получение списка записей",
@@ -47,7 +47,7 @@ class TodoListController(
     fun items(): List<ListItem> = todoListService.findAll()
 
     @Operation(
-        summary = "Создание новой запсии",
+        summary = "Создание новой записи",
         responses = [
             ApiResponse(
                 responseCode = "201",

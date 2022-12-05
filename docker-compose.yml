@@ -11,7 +11,19 @@ services:
       - db-data:/var/lib/postgresql/data
       - ./postgres/:/docker-entrypoint-initdb.d/
     ports:
-      - 5432:5432
+      - "5432:5432"
+
+  backend-todo-list:
+    build: .
+    image: romanowalex/backend-todo-list:v1.0
+    container_name: backend-todo-list
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
+    ports:
+      - "8080:8080"
+    depends_on:
+      - postgres
+
 
 volumes:
   db-data:

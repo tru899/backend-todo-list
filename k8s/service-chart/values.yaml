@@ -1,0 +1,19 @@
+port: 8080
+profile: k8s
+
+image:
+  repository: romanowalex/backend-todo-list
+  version: v1.0
+
+resources:
+  requests:
+    cpu: 500m
+    memory: 1024Mi
+  limits:
+    cpu: 500m
+    memory: 1024Mi
+
+metrics:
+  path: "/manage/prometheus"
+  username: management
+  password: passwd

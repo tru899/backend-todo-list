@@ -1,19 +1,20 @@
 plugins {
     id "idea"
     id "jacoco"
-    id "org.jetbrains.kotlin.jvm" version "1.5.21"
-    id "org.jetbrains.kotlin.plugin.jpa" version "1.5.21"
-    id "org.jetbrains.kotlin.plugin.spring" version "1.5.21"
-    id "org.springframework.boot" version "2.5.0"
+    id "org.jetbrains.kotlin.jvm" version "1.7.10"
+    id "org.jetbrains.kotlin.plugin.jpa" version "1.7.10"
+    id "org.jetbrains.kotlin.plugin.spring" version "1.7.10"
+    id "org.springframework.boot" version "2.7.5"
     id "io.spring.dependency-management" version "1.0.11.RELEASE"
+    id "com.gorylenko.gradle-git-properties" version "2.4.1"
 }
 
 [compileKotlin, compileTestKotlin]*.kotlinOptions *.jvmTarget = "11"
 
 ext {
     guavaVersion = "30.1.1-jre"
-    openApiVersion = "1.5.10"
-    postgresContainerVersion = "1.15.2"
+    openApiVersion = "1.6.12"
+    postgresContainerVersion = "1.17.0"
 }
 
 idea {
@@ -37,6 +38,7 @@ dependencies {
     implementation "org.postgresql:postgresql"
     implementation "org.flywaydb:flyway-core"
 
+    implementation "io.micrometer:micrometer-registry-prometheus"
     implementation "org.springdoc:springdoc-openapi-ui:$openApiVersion"
     implementation "org.springdoc:springdoc-openapi-kotlin:$openApiVersion"
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
@@ -56,7 +58,4 @@ test {
 
 bootJar {
     archiveFileName = "${project.name}.jar"
-    layered {
-        enabled = true
-    }
 }
