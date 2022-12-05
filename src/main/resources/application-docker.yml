@@ -1,7 +1,4 @@
 spring:
-  mvc:
-    servlet:
-      path: /backend
   datasource:
     url: jdbc:postgresql://postgres:5432/todo_list
     username: program

@@ -1,4 +1,6 @@
 spring:
+  mvc:
+    servlet.path: /
   datasource:
     url: jdbc:postgresql://${DATABASE_URL}:${DATABASE_PORT}/${DATABASE_NAME}?sslmode=require&prepareThreshold=0
     username: ${DATABASE_USER}
