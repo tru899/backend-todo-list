@@ -9,3 +9,9 @@ spring:
   jpa:
     hibernate:
       ddl-auto: none
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            redirect-uri: "{baseUrl}/backend/login/oauth2/code/{registrationId}"

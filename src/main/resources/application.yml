@@ -4,6 +4,13 @@ spring:
   profiles.active: local
   mvc:
     servlet.¬path: /backend
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: ${GOOGLE_CLIENT_ID}
+            client-secret: ${GOOGLE_CLIENT_SECRET}
 
 server:
   port: 8080
@@ -15,6 +22,10 @@ server:
         max-age: 86400
 
 management:
+  credentials:
+    user: management
+    password: test
+    role: MANAGEMENT
   endpoint:
     health.probes.enabled: true
   endpoints:
@@ -33,3 +44,7 @@ springdoc:
   paths-to-match: /api/**
   default-consumes-media-type: application/json
   default-produces-media-type: application/json
+
+oauth2:
+  login:
+    redirect-uri: /

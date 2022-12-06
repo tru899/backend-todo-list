@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Chart.Name }}-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: {{ .Chart.Name }}
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: {{ .Chart.Name }}
+        app.kubernetes.io/version: "{{ .Chart.Version }}"
+        app.kubernetes.io/component: spring
+    spec:
+      {{ if .Values.image.private }}
+      imagePullSecrets:
+        - name: private-registry
+      {{ end }}
+      containers:
+        - name: {{ .Chart.Name }}
+          image: {{ .Values.image.name }}:{{ .Values.image.version }}
+          imagePullPolicy: Always
+          env:
+            - name: SPRING_PROFILES_ACTIVE
+              value: k8s
+            - name: SERVLET_PATH
+              value: {{ .Values.path }}
+            - name: GOOGLE_CLIENT_ID
+              valueFrom:
+                secretKeyRef:
+                  name: credentials
+                  key: google-client-id
+            - name: GOOGLE_CLIENT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: credentials
+                  key: google-client-secret
+          ports:
+            - name: web
+              containerPort: {{ .Values.port }}
