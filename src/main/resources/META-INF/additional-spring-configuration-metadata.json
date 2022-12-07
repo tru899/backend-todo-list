@@ -1,0 +1,24 @@
+{
+  "properties": [
+    {
+      "name": "oauth2.login.redirect-uri",
+      "type": "java.lang.String",
+      "description": "Login redirect url for OAuth2."
+    },
+    {
+      "name": "management.credentials.user",
+      "type": "java.lang.String",
+      "description": "Management user."
+    },
+    {
+      "name": "management.credentials.password",
+      "type": "java.lang.String",
+      "description": "Management password."
+    },
+    {
+      "name": "management.credentials.role",
+      "type": "java.lang.String",
+      "description": "Management role."
+    }
+  ]
+}

@@ -7,3 +7,7 @@ spring:
   jpa:
     hibernate:
       ddl-auto: validate
+
+oauth2:
+  login:
+    redirect-uri: http://localhost:3000
