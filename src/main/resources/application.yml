@@ -3,7 +3,7 @@ spring:
   main.banner-mode: off
   profiles.active: local
   mvc:
-    servlet.¬path: /backend
+    servlet.path: /backend
   security:
     oauth2:
       client:

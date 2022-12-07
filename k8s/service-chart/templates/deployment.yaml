@@ -41,6 +41,16 @@ spec:
           env:
             - name: SPRING_PROFILES_ACTIVE
               value: "{{ .Values.profile }}"
+            - name: GOOGLE_CLIENT_ID
+              valueFrom:
+                secretKeyRef:
+                  name: credentials
+                  key: google-client-id
+            - name: GOOGLE_CLIENT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: credentials
+                  key: google-client-secret
           livenessProbe:
             initialDelaySeconds: 60
             failureThreshold: 10
