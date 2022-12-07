@@ -4,10 +4,12 @@
 
 ## Создание авторизации в Google
 
-1. Зайти в Google Cloud Platform -> Select a project -> New Project: TODO List.
-2. APIs & Services -> Credentials -> Create Credentials -> Create OAuth client ID -> Web Application ->
+Зайти в [Google Cloud Platform](https://console.cloud.google.com/):
+
+1. `Select a project` -> `New Project`: TODO List.
+2. `APIs & Services` -> `Credentials` -> `Create Credentials` -> `Create OAuth client ID` -> `Web Application` ->
    name: `TODO list OAuth Provider`.
-3. Authorized redirect URIs -> .
+3. Authorized redirect URIs -> `http://localhost:8080/login/oauth2/code/google`.
 4. Берем `Client ID` и `Client Secret` и добавляем их в secret.
 
 ```shell
@@ -21,7 +23,7 @@ kubectl create secret generic credentials \
 ```shell
 # сборка
 $ ./graldew clean build
-# запуск PostgreSQL 13 в docker
+# запуск Postgres 13 в docker
 $ docker compose up postgres -d
 # локальный запуск
 $ ./gradlew bootRun --args='--spring.profiles.active=local'   

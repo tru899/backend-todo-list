@@ -7,13 +7,6 @@ spring:
   jpa:
     hibernate:
       ddl-auto: validate
-  security:
-    oauth2:
-      client:
-        registration:
-          google:
-            client-id:
-            client-secret:
 
 oauth2:
   login:
