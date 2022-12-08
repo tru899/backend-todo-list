@@ -13,7 +13,7 @@ import org.springframework.http.HttpStatus
 import org.springframework.http.MediaType
 import org.springframework.http.ResponseEntity
 import org.springframework.http.ResponseEntity.created
-import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken
+import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder.fromCurrentRequest
 import ru.romanow.todolist.model.CreateItemRequest
@@ -48,8 +48,9 @@ class TodoListController(
         ]
     )
     @GetMapping(produces = [MediaType.APPLICATION_JSON_VALUE])
-    fun items(token: OAuth2AuthenticationToken): List<ListItem> {
-        return todoListService.findAll(token.principal.name)
+    fun items(token: JwtAuthenticationToken): List<ListItem> {
+        val userId = token.tokenAttributes["email"] as String
+        return todoListService.findAll(userId)
     }
 
     @Operation(
@@ -79,9 +80,13 @@ class TodoListController(
         ]
     )
     @PostMapping(consumes = [MediaType.APPLICATION_JSON_VALUE])
-    fun create(token: OAuth2AuthenticationToken, @Valid @RequestBody request: CreateItemRequest): ResponseEntity<Void> {
-        todoListService.create(token.principal.name, request)
-        return created(fromCurrentRequest().build().toUri()).build()
+    fun create(token: JwtAuthenticationToken, @Valid @RequestBody request: CreateItemRequest): ResponseEntity<Void> {
+        val userId = token.tokenAttributes["email"] as String
+        todoListService.create(userId, request)
+        return created(fromCurrentRequest()
+            .build()
+            .toUri())
+            .build()
     }
 
     @Operation(
@@ -90,7 +95,8 @@ class TodoListController(
     )
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping("/{uid}")
-    fun delete(token: OAuth2AuthenticationToken, @PathVariable uid: UUID) {
-        todoListService.delete(token.principal.name, uid)
+    fun delete(token: JwtAuthenticationToken, @PathVariable uid: UUID) {
+        val userId = token.tokenAttributes["email"] as String
+        todoListService.delete(userId, uid)
     }
 }

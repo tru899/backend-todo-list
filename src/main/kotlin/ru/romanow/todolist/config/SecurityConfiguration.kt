@@ -13,11 +13,13 @@ import org.springframework.security.core.userdetails.User
 import org.springframework.security.core.userdetails.UserDetailsService
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.security.crypto.password.PasswordEncoder
+import org.springframework.security.oauth2.server.resource.authentication.JwtIssuerAuthenticationManagerResolver
 import org.springframework.security.provisioning.InMemoryUserDetailsManager
 import org.springframework.security.web.SecurityFilterChain
 import org.springframework.security.web.authentication.HttpStatusEntryPoint
 import ru.romanow.todolist.config.properties.ActuatorSecurityProperties
 import ru.romanow.todolist.config.properties.OAuthLoginProperties
+
 
 @EnableWebSecurity
 @EnableConfigurationProperties(value = [OAuthLoginProperties::class, ActuatorSecurityProperties::class])
@@ -58,9 +60,16 @@ class SecurityConfiguration(
     @Bean
     @Order(THIRD)
     fun protectedResourceSecurityFilterChain(http: HttpSecurity): SecurityFilterChain {
+        val authenticationManagerResolver = JwtIssuerAuthenticationManagerResolver(
+            "https://accounts.google.com/",
+            "https://romanowalex.eu.auth0.com/"
+        )
         return http
             .authorizeRequests {
                 it.antMatchers(OPTIONS).permitAll().anyRequest().authenticated()
+            }
+            .oauth2ResourceServer {
+                it.authenticationManagerResolver(authenticationManagerResolver)
             }
             .exceptionHandling {
                 it.authenticationEntryPoint(HttpStatusEntryPoint(UNAUTHORIZED))

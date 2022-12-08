@@ -12,7 +12,7 @@ plugins {
 [compileKotlin, compileTestKotlin]*.kotlinOptions *.jvmTarget = "11"
 
 ext {
-    guavaVersion = "30.1.1-jre"
+    jwtVersion = "4.2.1"
     openApiVersion = "1.6.12"
     postgresContainerVersion = "1.17.0"
 }
@@ -34,7 +34,11 @@ dependencies {
     implementation "org.springframework.boot:spring-boot-starter-actuator"
     implementation "org.springframework.boot:spring-boot-starter-validation"
     implementation "org.springframework.boot:spring-boot-starter-logging"
+
     implementation "org.springframework.boot:spring-boot-starter-oauth2-client"
+    implementation "org.springframework.security:spring-security-oauth2-resource-server"
+    implementation "org.springframework.security:spring-security-oauth2-jose"
+    implementation "com.auth0:java-jwt:$jwtVersion"
 
     implementation "org.postgresql:postgresql"
     implementation "org.flywaydb:flyway-core"
@@ -46,7 +50,6 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-reflect"
     implementation "com.fasterxml.jackson.module:jackson-module-kotlin"
 
-    implementation "com.google.guava:guava:$guavaVersion"
     annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
 
     testImplementation "org.springframework.boot:spring-boot-starter-test"
