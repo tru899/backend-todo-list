@@ -60,7 +60,7 @@ class SecurityConfiguration(
     @Order(THIRD)
     fun protectedResourceSecurityFilterChain(http: HttpSecurity): SecurityFilterChain {
         val authenticationManagerResolver = JwtIssuerAuthenticationManagerResolver(
-            "https://accounts.google.com/",
+            "https://accounts.google.com",
             "https://romanowalex.eu.auth0.com/"
         )
         return http
