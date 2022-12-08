@@ -1,9 +1,9 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ .Chart.Name }}
+  name: {{ .Release.Name }}
   labels:
-    app.kubernetes.io/name: {{ .Chart.Name }}
+    app.kubernetes.io/name: {{ .Release.Name }}
     app.kubernetes.io/version: "{{ .Values.image.version }}"
     app.kubernetes.io/component: application
     app.kubernetes.io/part-of: person-service
@@ -12,7 +12,7 @@ spec:
   replicas: 1
   selector:
     matchLabels:
-      app: {{ .Chart.Name }}
+      app: {{ .Release.Name }}
   template:
     metadata:
       annotations:
@@ -20,15 +20,15 @@ spec:
         prometheus.io/path: "{{ .Values.metrics.path }}"
         prometheus.io/port: "{{ .Values.port }}"
       labels:
-        app: {{ .Chart.Name }}
-        app.kubernetes.io/name: {{ .Chart.Name }}
+        app: {{ .Release.Name }}
+        app.kubernetes.io/name: {{ .Release.Name }}
         app.kubernetes.io/version: "{{ .Values.image.version }}"
         app.kubernetes.io/component: application
         app.kubernetes.io/part-of: person-service
         app.kubernetes.io/managed-by: helm
     spec:
       containers:
-        - name: {{ .Chart.Name }}
+        - name: {{ .Release.Name }}
           imagePullPolicy: IfNotPresent
           image: {{ .Values.image.repository }}:{{ .Values.image.version }}
           resources:
@@ -56,14 +56,14 @@ spec:
             failureThreshold: 10
             periodSeconds: 10
             httpGet:
-              path: /manage/health/liveness
+              path: /backend/manage/health/liveness
               port: {{ .Values.port }}
           readinessProbe:
             initialDelaySeconds: 60
             failureThreshold: 10
             periodSeconds: 10
             httpGet:
-              path: /manage/health/readiness
+              path: /backend/manage/health/readiness
               port: {{ .Values.port }}
           ports:
             - name: web

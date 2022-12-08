@@ -46,7 +46,8 @@ class SecurityConfiguration(
         return http
             .requestMatcher(toAnyEndpoint())
             .authorizeRequests {
-                it.antMatchers("/manage/health").permitAll().anyRequest().hasRole(actuatorSecurityProperties.role)
+                it.antMatchers("/manage/health/**").permitAll()
+                    .anyRequest().hasRole(actuatorSecurityProperties.role)
             }
             .csrf { it.disable() }
             .formLogin { it.disable() }

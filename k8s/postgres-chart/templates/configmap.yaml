@@ -1,9 +1,9 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: {{ .Chart.Name }}-configmap
+  name: {{ .Release.Name }}-configmap
   labels:
-    app.kubernetes.io/name: {{ .Chart.Name }}-configmap
+    app.kubernetes.io/name: {{ .Release.Name }}-configmap
     app.kubernetes.io/version: "{{ .Values.version }}"
     app.kubernetes.io/component: application
     app.kubernetes.io/part-of: person-service

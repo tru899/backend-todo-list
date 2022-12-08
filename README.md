@@ -12,12 +12,6 @@
 3. Authorized redirect URIs -> `http://localhost:8080/login/oauth2/code/google`.
 4. Берем `Client ID` и `Client Secret` и добавляем их в secret.
 
-```shell
-kubectl create secret generic credentials \
-  --from-literal=google-client-id=<client-id> \
-  --from-literal=google-client-secret=<client-secret>
-```
-
 ### Локальный запуск
 
 ```shell
@@ -32,7 +26,17 @@ $ ./gradlew bootRun --args='--spring.profiles.active=local'
 ### Deploy to k8s
 
 ```shell
-$ helm install postgres k8s/postrges-chart
+$ kind create cluster --config kind.yml
 
-$ helm install backend-todo-list k8s/service-chart
+$ kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/main/deploy/static/provider/kind/deploy.yaml
+
+$ kind load docker-image postgres:13
+$ helm install postgres postgres-chart
+
+$ kubectl create secret generic credentials \
+    --from-literal=google-client-id=<client-id> \
+    --from-literal=google-client-secret=<client-secret>
+
+$ kind load docker-image romanowalex/backend-todo-list:v2.0
+$ helm install backend-todo-list service-chart
 ```
