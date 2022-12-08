@@ -24,7 +24,6 @@ import ru.romanow.todolist.config.properties.OAuthLoginProperties
 @EnableWebSecurity
 @EnableConfigurationProperties(value = [OAuthLoginProperties::class, ActuatorSecurityProperties::class])
 class SecurityConfiguration(
-    private val oauthLoginProperties: OAuthLoginProperties,
     private val actuatorSecurityProperties: ActuatorSecurityProperties,
 ) {
 
@@ -36,7 +35,7 @@ class SecurityConfiguration(
                 it.antMatchers("/oauth2/authorization/**", "/login/oauth2/code/**")
             }
             .oauth2Login {
-                it.defaultSuccessUrl(oauthLoginProperties.redirectUri, true)
+                it.defaultSuccessUrl("/callback", true)
             }
             .build()
     }
