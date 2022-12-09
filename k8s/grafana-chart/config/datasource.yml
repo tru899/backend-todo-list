@@ -1,0 +1,17 @@
+apiVersion: 1
+datasources:
+  - name: prometheus
+    type: prometheus
+    url: http://prometheus-service:9090
+    access: proxy
+    editable: true
+    version: 1
+  - name: influxdb
+    type: influxdb
+    url: http://influxdb-service:8086
+    database: k6
+    access: proxy
+    editable: true
+    jsonData:
+      httpMode: GET
+    version: 1

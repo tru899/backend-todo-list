@@ -1,5 +1,7 @@
 import {URLSearchParams} from "https://jslib.k6.io/url/1.0.0/index.js";
+import {randomIntBetween, randomString, uuidv4} from 'https://jslib.k6.io/k6-utils/1.4.0/index.js';
 import http from "k6/http";
+import {check} from "k6";
 
 export const options = {
     stages: [
@@ -31,6 +33,7 @@ export function setup() {
 }
 
 export default function (token) {
+    const hostname = `${__ENV.HOSTNAME}`
     const params = {
         headers: {
             "Authorization": `Bearer ${token}`,
@@ -38,5 +41,23 @@ export default function (token) {
         }
     };
 
+    const itemUid = uuidv4();
+    const body = {"text": `Hello, ${randomString(8)}`, "uid": itemUid}
+    let response = http.post(`http://${hostname}/backend/api/v1/public/items`, JSON.stringify(body), params);
+    check(response, {
+        "status is OK": (r) => r.status === 201
+    });
 
+    response = http.get(`http://${hostname}/backend/api/v1/public/items`, params);
+    check(response, {
+        "status is OK": (r) => r.status === 200,
+        "content is present": (r) => !!r.body,
+    });
+
+    if (randomIntBetween(1, 10) !== 10) {
+        response = http.del(`http://${hostname}/backend/api/v1/public/items/${itemUid}`, null, params);
+        check(response, {
+            "status is NO_CONTENT": (r) => r.status === 204
+        });
+    }
 };

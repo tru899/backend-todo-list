@@ -55,11 +55,14 @@ $ helm install grafana grafana-chart/ --set domain=grafana.local
 
 $ brew install k6
 
+$ helm install influxdb influxdb-chart/ 
+
 $ k6 run \
     --out influxdb=http://localhost:32086/k6 \
+    -e HOSTNAME=todo-list.ru \
     -e USERNAME=ronin@romanow-alex.ru \
     -e PASSWORD=Qwerty123 \
-    -e CLIENT_ID=pXrawhpoDM63b82A7fkiLvRIH81wgmH9 \
-    -e CLIENT_SECRET=LzQSxUOE2dmAUdgstWke4ngXUeZNLVczvSid7ZVV8HTegCRbOxchQtJ_23EuZ9_V \
+    -e CLIENT_ID=7uHBa1xYenYPjX7UhOonuGhOWvxLUwYM \
+    -e CLIENT_SECRET=TbNIL8SJx38sDDweRqWsRaqWKU7Q6UrWr0f6DzKwlLh48892GE4KfoKR1cfIe87e \
     k6-load.js
 ```

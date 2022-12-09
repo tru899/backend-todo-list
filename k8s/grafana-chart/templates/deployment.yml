@@ -42,7 +42,9 @@ spec:
               name: {{ .Chart.Name }}-storage-volume
             - mountPath: /etc/grafana/provisioning/datasources
               name: {{ .Chart.Name }}-datasources-volume
-              readOnly: false
+      {{/*            - mountPath: /etc/grafana/provisioning/dashboards*/}}
+      {{/*              name: {{ .Chart.Name }}-datasources-volume*/}}
+      {{/*              subPath: dashboards.yml*/}}
       volumes:
         - name: {{ .Chart.Name }}-storage-volume
         - name: {{ .Chart.Name }}-datasources-volume

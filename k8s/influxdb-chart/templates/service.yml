@@ -11,8 +11,10 @@ metadata:
 spec:
   selector:
     app: {{ .Chart.Name }}
+  type: NodePort
   ports:
     - name: {{ .Chart.Name }}
       protocol: TCP
       port: {{ .Values.port }}
       targetPort: {{ .Values.port }}
+      nodePort: {{ .Values.external }}

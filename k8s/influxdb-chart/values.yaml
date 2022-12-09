@@ -1,5 +1,8 @@
-version: 2.5.0
+version: 1.8.4
 port: 8086
+external: 32086
+
+database: k6
 
 resources:
   requests:

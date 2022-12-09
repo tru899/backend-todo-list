@@ -27,6 +27,9 @@ spec:
       containers:
         - name: {{ .Chart.Name }}
           image: "influxdb:{{ .Values.version }}"
+          env:
+            - name: INFLUXDB_DB
+              value: {{ .Values.database }}
           resources:
             limits:
               memory: {{ .Values.resources.limits.memory }}

@@ -9,5 +9,5 @@ metadata:
     app.kubernetes.io/part-of: todo-list
     app.kubernetes.io/managed-by: helm
 data:
-  prometheus.yaml: |-
-  {{- .Files.Get "config/datasource-config.yaml" | nindent 4 }}
+  datasource.yml: |-
+  {{- .Files.Get "config/datasource.yml" | nindent 4 }}
