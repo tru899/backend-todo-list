@@ -1,17 +1,18 @@
-apiVersion: v1
 kind: Service
+apiVersion: v1
 metadata:
-  name: {{ .Release.Name }}-service
+  name: {{ .Chart.Name }}-service
   labels:
-    app.kubernetes.io/name: {{ .Release.Name }}-service
+    app.kubernetes.io/name: {{ .Chart.Name }}-service
     app.kubernetes.io/version: "{{ .Values.version }}"
-    app.kubernetes.io/component: database
+    app.kubernetes.io/component: monitoring
     app.kubernetes.io/part-of: todo-list
     app.kubernetes.io/managed-by: helm
 spec:
   selector:
-    app: {{ .Release.Name }}
+    app: {{ .Chart.Name }}
   ports:
-    - protocol: TCP
+    - name: {{ .Chart.Name }}
+      protocol: TCP
       port: {{ .Values.port }}
       targetPort: {{ .Values.port }}

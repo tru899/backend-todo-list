@@ -6,7 +6,7 @@ metadata:
     app.kubernetes.io/name: {{ .Release.Name }}
     app.kubernetes.io/version: "{{ .Values.image.version }}"
     app.kubernetes.io/component: application
-    app.kubernetes.io/part-of: person-service
+    app.kubernetes.io/part-of: todo-list
     app.kubernetes.io/managed-by: helm
 spec:
   selector:

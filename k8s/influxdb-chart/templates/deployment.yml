@@ -1,0 +1,58 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Chart.Name }}
+  labels:
+    app.kubernetes.io/name: {{ .Chart.Name }}
+    app.kubernetes.io/version: "{{ .Values.version }}"
+    app.kubernetes.io/component: monitoring
+    app.kubernetes.io/part-of: todo-list
+    app.kubernetes.io/managed-by: helm
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{ .Chart.Name }}
+  template:
+    metadata:
+      name: {{ .Chart.Name }}
+      labels:
+        app: {{ .Chart.Name }}
+        app.kubernetes.io/name: {{ .Chart.Name }}
+        app.kubernetes.io/version: "{{ .Values.version }}"
+        app.kubernetes.io/component: monitoring
+        app.kubernetes.io/part-of: todo-list
+        app.kubernetes.io/managed-by: helm
+    spec:
+      containers:
+        - name: {{ .Chart.Name }}
+          image: "influxdb:{{ .Values.version }}"
+          resources:
+            limits:
+              memory: {{ .Values.resources.limits.memory }}
+              cpu: {{ .Values.resources.limits.cpu }}
+            requests:
+              memory: {{ .Values.resources.requests.memory }}
+              cpu: {{ .Values.resources.requests.cpu }}
+          livenessProbe:
+            initialDelaySeconds: 30
+            timeoutSeconds: 5
+            httpGet:
+              path: /ping
+              port: api
+              scheme: HTTP
+          readinessProbe:
+            initialDelaySeconds: 5
+            timeoutSeconds: 1
+            httpGet:
+              path: /ping
+              port: {{ .Values.port }}
+              scheme: HTTP
+          ports:
+            - name: {{ .Chart.Name }}
+              containerPort: {{ .Values.port }}
+          volumeMounts:
+            - name: {{ .Chart.Name }}-storage-volume
+              mountPath: /var/lib/influxdb
+      volumes:
+        - name: {{ .Chart.Name }}-storage-volume

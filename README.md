@@ -39,4 +39,27 @@ $ kubectl create secret generic credentials \
 
 $ kind load docker-image romanowalex/backend-todo-list:v2.0
 $ helm install backend-todo-list service-chart
+
+# (опционально) устанавливаем frontend
+$ git clone git@github.com:Romanow/frontend-todo-list.git
+$ helm upgrade frontend-todo-list frontend-todo-list/k8s/frontend-chart --set domain=todo-list.ru   
+```
+
+## Нагрузочное тестирование
+
+```shell
+# устанавливаем prometheus + grafana и kube-state-metrics для мониторинга состояния кластера
+$ helm install kube-state-metrics kube-state-metrics-chart/
+$ helm install prometheus prometheus-chart/ 
+$ helm install grafana grafana-chart/ --set domain=grafana.local 
+
+$ brew install k6
+
+$ k6 run \
+    --out influxdb=http://localhost:32086/k6 \
+    -e USERNAME=ronin@romanow-alex.ru \
+    -e PASSWORD=Qwerty123 \
+    -e CLIENT_ID=pXrawhpoDM63b82A7fkiLvRIH81wgmH9 \
+    -e CLIENT_SECRET=LzQSxUOE2dmAUdgstWke4ngXUeZNLVczvSid7ZVV8HTegCRbOxchQtJ_23EuZ9_V \
+    k6-load.js
 ```

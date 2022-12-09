@@ -1,0 +1,10 @@
+version: 2.5.0
+port: 8086
+
+resources:
+  requests:
+    cpu: 200m
+    memory: 512Mi
+  limits:
+    cpu: 200m
+    memory: 512Mi

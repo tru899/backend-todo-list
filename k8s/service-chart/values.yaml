@@ -14,6 +14,4 @@ resources:
     memory: 1024Mi
 
 metrics:
-  path: "/manage/prometheus"
-  username: management
-  password: passwd
+  path: "/backend/manage/prometheus"

@@ -6,7 +6,7 @@ metadata:
     app.kubernetes.io/name: {{ .Release.Name }}-configmap
     app.kubernetes.io/version: "{{ .Values.version }}"
     app.kubernetes.io/component: application
-    app.kubernetes.io/part-of: person-service
+    app.kubernetes.io/part-of: todo-list
     app.kubernetes.io/managed-by: helm
 data:
   10-create-user-and-dbs.sql: |

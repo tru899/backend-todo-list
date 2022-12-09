@@ -44,6 +44,7 @@ management:
       base-path: /manage
       exposure.include: info,health,loggers,prometheus
   health.diskspace.enabled: false
+  metrics.tags.application: ${spring.application.name}
   endpoint.health.show-details: always
   info.git.mode: simple
   health:
