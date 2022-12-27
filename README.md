@@ -30,19 +30,22 @@ $ kind create cluster --config kind.yml
 
 $ kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/main/deploy/static/provider/kind/deploy.yaml
 
-$ kind load docker-image postgres:13
-$ helm install postgres postgres-chart
+$ helm repo add romanow https://romanow.github.io/helm-charts/
+$ helm search romanow
+
+$ kind load docker-image postgres:15
+$ helm install postgres -f postgres/values.yaml romanow/postgres
 
 $ kubectl create secret generic credentials \
     --from-literal=google-client-id=<client-id> \
     --from-literal=google-client-secret=<client-secret>
 
 $ kind load docker-image romanowalex/backend-todo-list:v2.0
-$ helm install backend-todo-list service-chart
+$ helm install backend-todo-list -f backend/values.yaml romanow/java-service
 
 # (опционально) устанавливаем frontend
-$ git clone git@github.com:Romanow/frontend-todo-list.git
-$ helm upgrade frontend-todo-list frontend-todo-list/k8s/frontend-chart --set domain=todo-list.ru   
+$ kind load docker-image romanowalex/frontend-todo-list:v2.0
+$ helm upgrade frontend-todo-list -f backend/values.yaml romanow/frontend
 ```
 
 ## Нагрузочное тестирование

@@ -1,14 +1,19 @@
-version: 13
-port: 5432
+image:
+  pullPolicy: IfNotPresent
+  repository: postgres
+  tag: 15
 
-default_database:
-  name: postgres
-  user: postgres
-  password: postgres
+port: 5432
+serviceName: postgres
 
 users:
   - name: program
     password: test
+
+defaultDatabase:
+  name: postgres
+  user: postgres
+  password: postgres
 
 datases:
   - name: todo_list

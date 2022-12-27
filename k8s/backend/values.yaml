@@ -1,0 +1,25 @@
+image:
+  repository: romanowalex/backend-todo-list
+  tag: v2.0
+
+port: 8080
+profile: k8s
+
+ingress:
+  enabled: false
+
+database:
+  host: postgres
+
+metrics:
+  path: "/backend/manage/prometheus"
+  username: management
+  password: test
+
+resources:
+  requests:
+    cpu: 1
+    memory: 2048Mi
+  limits:
+    cpu: 1
+    memory: 2048Mi
