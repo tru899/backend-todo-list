@@ -4,7 +4,6 @@ image:
   tag: 15
 
 port: 5432
-serviceName: postgres
 
 users:
   - name: program

@@ -11,10 +11,24 @@ ingress:
 database:
   host: postgres
 
+secrets:
+  - name: GOOGLE_CLIENT_ID
+    secretName: credentials
+    secretKey: google-client-id
+  - name: GOOGLE_CLIENT_SECRET
+    secretName: credentials
+    secretKey: google-client-id
+
 metrics:
   path: "/backend/manage/prometheus"
   username: management
   password: test
+
+liveness:
+  path: "/backend/manage/health/liveness"
+
+readiness:
+  path: "/backend/manage/health/readiness"
 
 resources:
   requests:

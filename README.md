@@ -45,7 +45,9 @@ $ helm install backend-todo-list -f backend/values.yaml romanow/java-service
 
 # (опционально) устанавливаем frontend
 $ kind load docker-image romanowalex/frontend-todo-list:v2.0
-$ helm upgrade frontend-todo-list -f backend/values.yaml romanow/frontend
+$ helm upgrade frontend-todo-list -f frontend/values.yaml romanow/frontend
+
+$ echo "127.0.0.1        todo-list.ru" | sudo tee -a /etc/hosts
 ```
 
 ## Нагрузочное тестирование
