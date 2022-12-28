@@ -1,0 +1,56 @@
+{
+  "id": "6d7c5651-a7a9-4268-957d-3602c6bc0b21",
+  "name": "[kind] TODO list",
+  "values": [
+    {
+      "key": "baseUrl",
+      "value": "http://todo-list.ru/backend",
+      "enabled": true
+    },
+    {
+      "key": "identityProviderUrl",
+      "value": "https://romanowalex.eu.auth0.com",
+      "type": "default",
+      "enabled": true
+    },
+    {
+      "key": "clientId",
+      "value": "7uHBa1xYenYPjX7UhOonuGhOWvxLUwYM",
+      "type": "secret",
+      "enabled": true
+    },
+    {
+      "key": "clientSecret",
+      "value": "TbNIL8SJx38sDDweRqWsRaqWKU7Q6UrWr0f6DzKwlLh48892GE4KfoKR1cfIe87e",
+      "type": "secret",
+      "enabled": true
+    },
+    {
+      "key": "username",
+      "value": "ronin@romanow-alex.ru",
+      "type": "default",
+      "enabled": true
+    },
+    {
+      "key": "password",
+      "value": "Qwerty123",
+      "type": "secret",
+      "enabled": true
+    },
+    {
+      "key": "itemUid",
+      "value": "",
+      "type": "any",
+      "enabled": true
+    },
+    {
+      "key": "itemsCount",
+      "value": "",
+      "type": "any",
+      "enabled": true
+    }
+  ],
+  "_postman_variable_scope": "environment",
+  "_postman_exported_at": "2022-12-28T08:38:37.983Z",
+  "_postman_exported_using": "Postman/10.6.7"
+}

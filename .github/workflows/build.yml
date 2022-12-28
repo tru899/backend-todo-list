@@ -60,8 +60,8 @@ jobs:
       - name: Run API Tests
         uses: matt-ball/newman-action@master
         with:
-          collection: postman/collection.json
-          environment: postman/environment.json
+          collection: tests/postman/collection.json
+          environment: tests/postman/docker-environment.json
           delayRequest: 100
           reporters: '[ "cli" ]'
 

@@ -1,0 +1,374 @@
+{
+	"info": {
+		"_postman_id": "2dae7eea-153d-4b0a-b2a3-decc2b7222b4",
+		"name": "TODO list",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "976707"
+	},
+	"item": [
+		{
+			"name": "Authorize",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Authorize\", () => {",
+							"    pm.response.to.have.status(200)",
+							"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.contains(\"application/json\");",
+							"",
+							"    const response = pm.response.json();",
+							"    pm.expect(response.id_token).not.be.empty",
+							"    pm.environment.set(\"token\", response.id_token)",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "scope",
+							"value": "openid email profile",
+							"type": "text"
+						},
+						{
+							"key": "grant_type",
+							"value": "password",
+							"type": "text"
+						},
+						{
+							"key": "client_id",
+							"value": "{{clientId}}",
+							"type": "text"
+						},
+						{
+							"key": "client_secret",
+							"value": "{{clientSecret}}",
+							"type": "text"
+						},
+						{
+							"key": "username",
+							"value": "{{username}}",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "{{password}}",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{identityProviderUrl}}/oauth/token",
+					"host": [
+						"{{identityProviderUrl}}"
+					],
+					"path": [
+						"oauth",
+						"token"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "List items",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Get all items\", () => {",
+							"    pm.response.to.have.status(200)",
+							"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.eql(\"application/json\");",
+							"    ",
+							"    const response = pm.response.json();",
+							"    pm.expect(response).to.be.an(\"array\")",
+							"    pm.environment.set(\"itemsCount\", response.length)",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/api/v1/public/items",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"public",
+						"items"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create new item",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Create new item\", function() {",
+							"    pm.response.to.have.status(201)",
+							"    var request = JSON.parse(pm.request.body.raw)",
+							"    pm.environment.set(\"itemUid\", request.uid)",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"text\": \"Hello, {{$randomFirstName}}\",\n    \"uid\": \"{{$randomUUID}}\"\n}"
+				},
+				"url": {
+					"raw": "{{baseUrl}}/api/v1/public/items",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"public",
+						"items"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "List items after insert",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Get all items\", () => {",
+							"    pm.response.to.have.status(200)",
+							"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.eql(\"application/json\");",
+							"    ",
+							"    const itemsCount = pm.environment.get(\"itemsCount\")",
+							"    const itemUid = pm.environment.get(\"itemUid\")",
+							"",
+							"    const response = pm.response.json();",
+							"    pm.expect(response).to.be.an(\"array\")",
+							"    pm.expect(response.length).to.be.eq(itemsCount + 1)",
+							"",
+							"    const item = _.find(response, { \"uid\": itemUid })",
+							"    pm.expect(item).to.be.not.undefined",
+							"    pm.expect(item.text).to.be.not.undefined",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/api/v1/public/items",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"public",
+						"items"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete item",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Delete item\", function() {",
+							"    pm.response.to.have.status(204)",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/api/v1/public/items/:itemUid",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"public",
+						"items",
+						":itemUid"
+					],
+					"variable": [
+						{
+							"key": "itemUid",
+							"value": "{{itemUid}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "List items after delete",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Get all items\", () => {",
+							"    pm.response.to.have.status(200)",
+							"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.eql(\"application/json\");",
+							"    ",
+							"    const itemsCount = pm.environment.get(\"itemsCount\")",
+							"    const itemUid = pm.environment.get(\"itemUid\")",
+							"",
+							"    const response = pm.response.json();",
+							"    pm.expect(response).to.be.an(\"array\")",
+							"    pm.expect(response.length).to.be.eq(itemsCount)",
+							"",
+							"    const item = _.find(response, { \"uid\": itemUid })",
+							"    pm.expect(item).to.be.undefined",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/api/v1/public/items",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"public",
+						"items"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "http://localhost:8080",
+			"type": "string"
+		},
+		{
+			"key": "authorizationToken",
+			"value": ""
+		},
+		{
+			"key": "token",
+			"value": ""
+		},
+		{
+			"key": "itemsCount",
+			"value": ""
+		},
+		{
+			"key": "itemUid",
+			"value": ""
+		}
+	]
+}

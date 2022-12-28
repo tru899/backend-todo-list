@@ -45,9 +45,15 @@ $ helm install backend-todo-list -f backend/values.yaml romanow/java-service
 
 # (опционально) устанавливаем frontend
 $ kind load docker-image romanowalex/frontend-todo-list:v2.0
-$ helm upgrade frontend-todo-list -f frontend/values.yaml romanow/frontend
+$ helm install frontend-todo-list -f frontend/values.yaml romanow/frontend --set ingress.domain=ru
 
 $ echo "127.0.0.1        todo-list.ru" | sudo tee -a /etc/hosts
+```
+
+## Интеграционное тестирование
+
+```shell
+$ newman run -e kind-environment.json collection.json
 ```
 
 ## Нагрузочное тестирование
