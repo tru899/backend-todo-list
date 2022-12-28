@@ -1,4 +1,4 @@
-version: "3.8"
+version: "3.9"
 services:
   frontend-todo-list:
     image: romanowalex/frontend-todo-list:v2.0
@@ -6,3 +6,11 @@ services:
     restart: on-failure
     ports:
       - "80:80"
+    networks:
+      common:
+        aliases:
+          - todo-list.ru
+
+networks:
+  common:
+    name: common

@@ -1,19 +1,18 @@
 package ru.romanow.todolist
 
-import com.codeborne.selenide.Configuration
+import com.codeborne.selenide.Configuration.*
 import com.codeborne.selenide.Selenide.open
 import org.junit.jupiter.api.*
 import org.junit.jupiter.api.MethodOrderer.OrderAnnotation
-import org.slf4j.LoggerFactory
 import ru.romanow.todolist.login.LoginPage
 import ru.romanow.todolist.login.LoginPageValidator
 import ru.romanow.todolist.todo.State
 import ru.romanow.todolist.todo.TodoListPage
 import ru.romanow.todolist.todo.TodoListPageValidator
 
+
 @TestMethodOrder(OrderAnnotation::class)
 class TodoListTest {
-    private val logger = LoggerFactory.getLogger(TodoListTest::class.java)
 
     @BeforeEach
     fun prepare() {
@@ -48,7 +47,15 @@ class TodoListTest {
         @JvmStatic
         @BeforeAll
         fun beforeAll() {
-            Configuration.browser = "chrome"
+            remote = "http://localhost:4444/wd/hub"
+            browser = "chrome"
+            browserVersion = "108.0"
+
+            browserCapabilities
+                .setCapability("selenoid:options", mutableMapOf(
+                    "enableVNC" to true,
+                    "enableLog" to true
+                ))
         }
     }
 }

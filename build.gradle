@@ -15,6 +15,7 @@ ext {
     jwtVersion = "4.2.1"
     openApiVersion = "1.6.12"
     selenideVersion = "6.7.2"
+    selenoidAdapterVersion = "2.3.3"
     postgresContainerVersion = "1.17.0"
 }
 
@@ -78,6 +79,7 @@ dependencies {
     testImplementation "org.testcontainers:postgresql:$postgresContainerVersion"
 
     guiImplementation "com.codeborne:selenide:$selenideVersion"
+    guiImplementation "org.selenide:selenide-selenoid:$selenoidAdapterVersion"
 }
 
 test {
