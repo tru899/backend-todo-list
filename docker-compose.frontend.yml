@@ -1,0 +1,8 @@
+version: "3.8"
+services:
+  frontend-todo-list:
+    image: romanowalex/frontend-todo-list:v2.0
+    container_name: frontend-todo-list
+    restart: on-failure
+    ports:
+      - "80:80"

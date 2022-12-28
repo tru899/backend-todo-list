@@ -10,4 +10,4 @@ spring:
 
 oauth2:
   login:
-    redirect-uri: http://localhost:3000/
+    redirect-uri: http://todo-list.ru/

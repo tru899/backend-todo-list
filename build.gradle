@@ -9,11 +9,12 @@ plugins {
     id "com.gorylenko.gradle-git-properties" version "2.4.1"
 }
 
-[compileKotlin, compileTestKotlin]*.kotlinOptions *.jvmTarget = "11"
+[compileKotlin, compileTestKotlin]*.kotlinOptions*.jvmTarget = "11"
 
 ext {
     jwtVersion = "4.2.1"
     openApiVersion = "1.6.12"
+    selenideVersion = "6.7.2"
     postgresContainerVersion = "1.17.0"
 }
 
@@ -21,11 +22,32 @@ idea {
     module {
         downloadJavadoc = true
         downloadSources = true
+        testSourceDirs += file("src/gui/kotlin")
     }
 }
 
 repositories {
     mavenCentral()
+}
+
+sourceSets {
+    gui {
+        compileClasspath += sourceSets.main.output + sourceSets.test.output
+        runtimeClasspath += sourceSets.main.output + sourceSets.test.output
+    }
+}
+
+configurations {
+    guiImplementation.extendsFrom testImplementation
+    guiRuntimeOnly.extendsFrom testRuntimeOnly
+}
+
+task gui(type: Test) {
+    description = "Runs Selenium tests"
+    group = "verification"
+
+    testClassesDirs = sourceSets.gui.output.classesDirs
+    classpath = sourceSets.gui.runtimeClasspath
 }
 
 dependencies {
@@ -54,9 +76,15 @@ dependencies {
 
     testImplementation "org.springframework.boot:spring-boot-starter-test"
     testImplementation "org.testcontainers:postgresql:$postgresContainerVersion"
+
+    guiImplementation "com.codeborne:selenide:$selenideVersion"
 }
 
 test {
+    useJUnitPlatform()
+}
+
+gui {
     useJUnitPlatform()
 }
 

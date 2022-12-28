@@ -1,5 +1,11 @@
 apiVersion: 1
+
 providers:
+  - name: 'cAdvisor'
+    type: file
+    options:
+      path: /etc/grafana/provisioning/dashboards/dashboards/cadvisor.json
+
   - name: 'Spring Boot Statistics'
     type: file
     options:
