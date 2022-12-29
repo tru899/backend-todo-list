@@ -25,7 +25,7 @@ jobs:
           path: build/libs/*.jar
           retention-days: 1
 
-      - name: Test Report
+      - name: Unit Tests Report
         uses: mikepenz/action-junit-report@v2
         if: always()
         with:
@@ -109,6 +109,12 @@ jobs:
       - name: Run Selenium Tests
         timeout-minutes: 5
         run: ./gradlew selenide
+
+      - name: Selenium Tests Report
+        uses: mikepenz/action-junit-report@v2
+        if: always()
+        with:
+          report_paths: '**/build/test-results/test/TEST-*.xml'
 
       - name: Stop containers
         if: always()
