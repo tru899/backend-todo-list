@@ -114,7 +114,8 @@ jobs:
         timeout-minutes: 5
         run: ./gradlew selenide
 
-      - name: List containers
+      - name: Logs containers
+        if: always()
         timeout-minutes: 5
         run: docker logs selenoid
 
