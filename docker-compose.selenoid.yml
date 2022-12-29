@@ -2,6 +2,7 @@ version: "3.9"
 services:
   selenoid:
     image: aerokube/selenoid:1.10.8
+    container_name: selenoid
     command: [ "-conf", "/etc/selenoid/browsers.json", "-container-network", "common" ]
     ports:
       - "4444:4444"

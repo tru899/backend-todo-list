@@ -106,9 +106,17 @@ jobs:
         env:
           WAIT_PORTS: 8080
 
+      - name: List containers
+        timeout-minutes: 5
+        run: docker ps
+
       - name: Run Selenium Tests
         timeout-minutes: 5
         run: ./gradlew selenide
+
+      - name: List containers
+        timeout-minutes: 5
+        run: docker logs selenoid
 
       - name: Selenium Tests Report
         uses: mikepenz/action-junit-report@v2
