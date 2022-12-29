@@ -70,6 +70,56 @@ jobs:
         continue-on-error: true
         run: docker compose down -v
 
+  ui:
+    name: UI Test
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: docker/setup-buildx-action@v2
+
+      - uses: actions/setup-java@v2
+        with:
+          distribution: 'adopt'
+          java-version: '11'
+          cache: 'gradle'
+
+      - uses: actions/download-artifact@v3
+        with:
+          name: jar
+          path: build/libs/
+
+      - name: Build images
+        timeout-minutes: 10
+        run: docker compose build
+
+      - name: Run containers
+        timeout-minutes: 5
+        run: |
+          docker compose \
+              -f docker-compose.yml \
+              -f docker-compose.frontend.yml \
+              -f docker-compose.selenoid.yml \
+              up -d
+          ./scripts/wait-script.sh
+        env:
+          WAIT_PORTS: 8080
+
+      - name: Run Selenium Tests
+        timeout-minutes: 5
+        run: ./gradlew selenide
+
+      - name: Stop containers
+        if: always()
+        continue-on-error: true
+        run: |
+          docker compose \
+              -f docker-compose.yml \
+              -f docker-compose.frontend.yml \
+              -f docker-compose.selenoid.yml \
+              down -v
+
   publish:
     name: Publish to Docker Hub
     runs-on: ubuntu-latest

@@ -1,14 +1,17 @@
 package ru.romanow.todolist
 
-import com.codeborne.selenide.Configuration.*
+import com.codeborne.selenide.CollectionCondition.size
+import com.codeborne.selenide.Condition.*
 import com.codeborne.selenide.Selenide.open
-import org.junit.jupiter.api.*
+import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.MethodOrderer.OrderAnnotation
+import org.junit.jupiter.api.Order
+import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.TestMethodOrder
 import ru.romanow.todolist.login.LoginPage
-import ru.romanow.todolist.login.LoginPageValidator
-import ru.romanow.todolist.todo.State
+import ru.romanow.todolist.login.LoginPageResults
 import ru.romanow.todolist.todo.TodoListPage
-import ru.romanow.todolist.todo.TodoListPageValidator
+import ru.romanow.todolist.todo.TodoListPageResults
 
 
 @TestMethodOrder(OrderAnnotation::class)
@@ -22,40 +25,45 @@ class TodoListTest {
     @Test
     @Order(1)
     fun login() {
-        LoginPageValidator().validate()
+        LoginPageResults().loginModal().exists()
         LoginPage().authorize()
     }
 
     @Test
     @Order(2)
     fun items() {
-        val validator = TodoListPageValidator()
-
-        val itemsCount = validator.validate()
         val page = TodoListPage()
+        val results = TodoListPageResults()
+
+        results.loader().shouldBe(hidden)
+        val items = results.itemsCount()
+        val itemsCount = items.size
 
         val item = page.addNewItem()
-        validator.validate(itemsCount + 1, item)
+        items.shouldHave(size(itemsCount + 1))
+        results.item(item.uid).shouldHave(text(item.text))
+
         page.removeItem(item)
 
-        validator.validate(itemsCount, item, State.ABSENT)
+        items.shouldHave(size(itemsCount))
+        results.item(item.uid).shouldNot(exist)
     }
 
     companion object {
         private const val TODO_LIST_URL = "http://todo-list.ru"
 
-        @JvmStatic
-        @BeforeAll
-        fun beforeAll() {
-            remote = "http://localhost:4444/wd/hub"
-            browser = "chrome"
-            browserVersion = "108.0"
-
-            browserCapabilities
-                .setCapability("selenoid:options", mutableMapOf(
-                    "enableVNC" to true,
-                    "enableLog" to true
-                ))
-        }
+//        @JvmStatic
+//        @BeforeAll
+//        fun beforeAll() {
+//            remote = "http://localhost:4444/wd/hub"
+//            browser = "chrome"
+//            browserVersion = "108.0"
+//
+//            browserCapabilities
+//                .setCapability("selenoid:options", mutableMapOf(
+//                    "enableVNC" to true,
+//                    "enableLog" to true
+//                ))
+//        }
     }
 }

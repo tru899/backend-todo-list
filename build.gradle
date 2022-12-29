@@ -43,14 +43,6 @@ configurations {
     guiRuntimeOnly.extendsFrom testRuntimeOnly
 }
 
-task gui(type: Test) {
-    description = "Runs Selenium tests"
-    group = "verification"
-
-    testClassesDirs = sourceSets.gui.output.classesDirs
-    classpath = sourceSets.gui.runtimeClasspath
-}
-
 dependencies {
     implementation "org.springframework.boot:spring-boot-starter-web"
     implementation "org.springframework.boot:spring-boot-starter-data-jpa"
@@ -82,11 +74,27 @@ dependencies {
     guiImplementation "org.selenide:selenide-selenoid:$selenoidAdapterVersion"
 }
 
-test {
-    useJUnitPlatform()
+class SeleniumTest extends Test {
+    SeleniumTest() {
+        description = "Runs Selenium tests"
+        group = "verification"
+
+        testClassesDirs = project.sourceSets.gui.output.classesDirs
+        classpath = project.sourceSets.gui.runtimeClasspath
+
+        systemProperties["file.encoding"] = "UTF-8"
+        systemProperties["selenide.browser"] = "chrome"
+        systemProperties["selenide.browserVersion"] = "108.0"
+    }
 }
 
-gui {
+task selenoid(type: SeleniumTest) {}
+
+task selenide(type: SeleniumTest) {
+    systemProperties["selenide.remote"] = "http://localhost:4444/wd/hub"
+}
+
+tasks.withType(Test) {
     useJUnitPlatform()
 }
 
