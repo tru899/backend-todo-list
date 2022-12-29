@@ -106,16 +106,15 @@ jobs:
         env:
           WAIT_PORTS: 8080
 
-      - name: List containers
-        timeout-minutes: 5
-        run: docker ps
+      - name: Pull Chrome image
+        run: docker pull selenoid/vnc:chrome_108.0
 
       - name: Run Selenium Tests
         timeout-minutes: 5
         run: ./gradlew selenide
 
-      - name: Logs containers
-        if: always()
+      - name: List Selenoid logs
+        if: failure()
         timeout-minutes: 5
         run: docker logs selenoid
 

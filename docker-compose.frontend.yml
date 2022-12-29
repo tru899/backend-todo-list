@@ -7,10 +7,6 @@ services:
     ports:
       - "80:80"
     networks:
-      common:
+      default:
         aliases:
           - todo-list.ru
-
-networks:
-  common:
-    name: common

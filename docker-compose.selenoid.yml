@@ -9,8 +9,6 @@ services:
     volumes:
       - ./docker/selenoid/:/etc/selenoid/
       - /var/run/docker.sock:/var/run/docker.sock
-    networks:
-      - common
 
   selenoid-ui:
     image: aerokube/selenoid-ui:1.10.8
@@ -18,9 +16,7 @@ services:
     command: [ "--selenoid-uri", "http://selenoid:4444" ]
     ports:
       - "8880:8080"
-    networks:
-      - common
 
 networks:
-  common:
+  default:
     name: common

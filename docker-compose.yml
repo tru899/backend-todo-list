@@ -12,8 +12,6 @@ services:
       - ./docker/postgres/:/docker-entrypoint-initdb.d/
     ports:
       - "5432:5432"
-    networks:
-      - common
 
   backend-todo-list:
     build: .
@@ -27,12 +25,6 @@ services:
       - "8080:8080"
     depends_on:
       - postgres
-    networks:
-      - common
 
 volumes:
   db-data:
-
-networks:
-  common:
-    name: common
