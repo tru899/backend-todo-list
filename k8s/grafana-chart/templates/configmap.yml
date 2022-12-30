@@ -10,10 +10,10 @@ metadata:
     app.kubernetes.io/managed-by: helm
 data:
   datasources.yml: |-
-    {{- tpl (.Files.Get "config/datasources.yml" | nindent 4) . }}
+    {{- tpl (.Files.Get "config/datasources.yml") . | nindent 4 }}
 
   dashboards.yml: |-
-    {{- tpl (.Files.Get "config/dashboards.yml" | nindent 4) . }}
+    {{- tpl (.Files.Get "config/dashboards.yml") . | nindent 4 }}
 
   {{- range $dashboard := .Values.dashboards }}
   {{ $dashboard }}.json: |-
