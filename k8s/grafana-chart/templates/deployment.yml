@@ -50,7 +50,7 @@ spec:
             - mountPath: /etc/grafana/provisioning/dashboards/dashboards/{{ $dashboard }}.json
               name: {{ $.Chart.Name }}-config-volume
               subPath: {{ $dashboard }}.json
-      {{- end }}
+            {{- end }}
       volumes:
         - name: {{ .Chart.Name }}-storage-volume
         - name: {{ .Chart.Name }}-config-volume
