@@ -60,14 +60,19 @@ $ newman run -e kind-environment.json collection.json
 
 ```shell
 # устанавливаем prometheus + grafana и kube-state-metrics для мониторинга состояния кластера
+$ kind load docker-image registry.k8s.io/kube-state-metrics/kube-state-metrics:v2.6.0
 $ helm install kube-state-metrics kube-state-metrics-chart/
+
+$ kind load docker-image prom/prometheus:v2.40.0
 $ helm install prometheus prometheus-chart/ 
+
+$ kind load docker-image grafana/grafana:8.3.4
 $ helm install grafana grafana-chart/ --set domain=grafana.local 
 
-$ brew install k6
-
+$ kind load docker-image influxdb:1.8.4
 $ helm install influxdb influxdb-chart/ 
 
+$ brew install k6
 $ k6 run \
     --out influxdb=http://localhost:32086/k6 \
     -e HOSTNAME=todo-list.ru \

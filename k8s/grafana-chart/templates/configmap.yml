@@ -9,5 +9,13 @@ metadata:
     app.kubernetes.io/part-of: todo-list
     app.kubernetes.io/managed-by: helm
 data:
-  datasource.yml: |-
-  {{- .Files.Get "config/datasource.yml" | nindent 4 }}
+  datasources.yml: |-
+    {{- tpl (.Files.Get "config/datasources.yml") . | nindent 4 }}
+
+  dashboards.yml: |-
+    {{- tpl (.Files.Get "config/dashboards.yml") . | nindent 4 }}
+
+  {{- range $dashboard := .Values.dashboards }}
+  {{ $dashboard }}.json: |-
+    {{- printf "config/dashboards/%s.json" $dashboard | $.Files.Get | nindent 6 }}
+  {{- end }}
