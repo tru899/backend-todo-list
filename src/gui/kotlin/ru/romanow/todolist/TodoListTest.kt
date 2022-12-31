@@ -13,7 +13,6 @@ import ru.romanow.todolist.login.LoginPageResults
 import ru.romanow.todolist.todo.TodoListPage
 import ru.romanow.todolist.todo.TodoListPageResults
 
-
 @TestMethodOrder(OrderAnnotation::class)
 class TodoListTest {
 
@@ -51,19 +50,5 @@ class TodoListTest {
 
     companion object {
         private const val TODO_LIST_URL = "http://todo-list.ru"
-
-//        @JvmStatic
-//        @BeforeAll
-//        fun beforeAll() {
-//            remote = "http://localhost:4444/wd/hub"
-//            browser = "chrome"
-//            browserVersion = "108.0"
-//
-//            browserCapabilities
-//                .setCapability("selenoid:options", mutableMapOf(
-//                    "enableVNC" to true,
-//                    "enableLog" to true
-//                ))
-//        }
     }
 }
