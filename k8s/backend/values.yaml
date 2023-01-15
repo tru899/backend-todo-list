@@ -2,14 +2,10 @@ image:
   repository: romanowalex/backend-todo-list
   tag: v2.0
 
-port: 8080
+ports:
+  internal: 8080
+
 profile: k8s
-
-ingress:
-  enabled: false
-
-database:
-  host: postgres
 
 secrets:
   - name: GOOGLE_CLIENT_ID
