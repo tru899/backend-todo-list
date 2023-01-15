@@ -1,5 +1,6 @@
 version: v2.40.0
-port: 9090
+ports:
+  external: 32090
 
 resources:
   requests:

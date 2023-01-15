@@ -3,7 +3,9 @@ image:
   repository: postgres
   tag: 15
 
-port: 5432
+ports:
+  internal: 5432
+  external:
 
 users:
   - name: program
@@ -14,7 +16,7 @@ defaultDatabase:
   user: postgres
   password: postgres
 
-datases:
+databases:
   - name: todo_list
     user: program
 

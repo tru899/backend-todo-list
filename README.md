@@ -60,17 +60,23 @@ $ newman run -e kind-environment.json collection.json
 
 ```shell
 # устанавливаем prometheus + grafana и kube-state-metrics для мониторинга состояния кластера
+$ helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
+$ helm repo update
+
 $ kind load docker-image registry.k8s.io/kube-state-metrics/kube-state-metrics:v2.6.0
-$ helm install kube-state-metrics kube-state-metrics-chart/
+$ helm install kube-state-metrics prometheus-community/kube-state-metrics --set image.tag=v2.6.0
 
 $ kind load docker-image prom/prometheus:v2.40.0
-$ helm install prometheus prometheus-chart/ 
+$ helm install prometheus -f prometheus/values.yaml romanow/prometheus 
 
-$ kind load docker-image grafana/grafana:8.3.4
-$ helm install grafana grafana-chart/ --set domain=grafana.local 
+$ kind load docker-image prom/node-exporter:v1.5.0
+$ helm install node-exporter romanow/node-exporter
 
 $ kind load docker-image influxdb:1.8.4
-$ helm install influxdb influxdb-chart/ 
+$ helm install influxdb -f influxdb/values.yaml romanow/influxdb 
+
+$ kind load docker-image grafana/grafana:8.3.4
+$ helm install grafana -f grafana/values.yaml romanow/grafana --set ingress.domain=ru
 
 $ brew install k6
 $ k6 run \

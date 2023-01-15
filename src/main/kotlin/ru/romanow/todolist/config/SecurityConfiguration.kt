@@ -46,7 +46,8 @@ class SecurityConfiguration(
         return http
             .requestMatcher(toAnyEndpoint())
             .authorizeRequests {
-                it.antMatchers("/manage/health/**").permitAll()
+                it.antMatchers("/manage/health/**", "/manage/prometheus")
+                    .permitAll()
                     .anyRequest().hasRole(actuatorSecurityProperties.role)
             }
             .csrf { it.disable() }
