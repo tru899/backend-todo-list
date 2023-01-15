@@ -1,4 +1,3 @@
-version: v2.40.0
 ports:
   external: 32090
 
