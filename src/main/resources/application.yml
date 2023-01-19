@@ -60,3 +60,6 @@ springdoc:
 oauth2:
   login:
     redirect-uri: /
+
+index-page:
+  enabled: ${INDEX_PAGE:true}

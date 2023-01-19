@@ -88,3 +88,29 @@ $ k6 run \
     -e CLIENT_SECRET=TbNIL8SJx38sDDweRqWsRaqWKU7Q6UrWr0f6DzKwlLh48892GE4KfoKR1cfIe87e \
     k6-load.js
 ```
+
+## Обновление версий приложения
+
+```shell
+# Базовая версия
+$ helm install postgres -f postgres/values.yaml romanow/postgres
+$ helm install backend-todo-list -f backend/values.yaml romanow/java-service
+$ helm install frontend-todo-list -f frontend/values.yaml --set ingress.domain=ru romanow/frontend
+
+# Новая версия (отсутствует index page)
+$ helm install \
+    backend-todo-list-v1 \
+    -f backend/values.yaml \
+    --set environments[0].name=INDEX_PAGE \
+    --set environments[0].value=false \
+    romanow/java-service
+    
+$ helm install \
+    frontend-todo-list-v1 \
+    -f frontend/values.yaml \
+    --set backendServiceName=backend-todo-list-v1 \
+    --set ingress.domain=ru \
+    --set ingress.name=todo-list-v1 \
+    romanow/frontend
+```
+

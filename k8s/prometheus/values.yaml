@@ -1,6 +1,3 @@
-ports:
-  external: 32090
-
 resources:
   requests:
     cpu: 300m

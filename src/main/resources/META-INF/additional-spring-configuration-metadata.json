@@ -19,6 +19,11 @@
       "name": "management.credentials.role",
       "type": "java.lang.String",
       "description": "Management role."
+    },
+    {
+      "name": "index-page.enabled",
+      "type": "java.lang.String",
+      "description": "Flag to enable index page."
     }
   ]
 }

@@ -2,9 +2,6 @@ image:
   repository: romanowalex/backend-todo-list
   tag: v2.0
 
-ports:
-  internal: 8080
-
 profile: k8s
 
 secrets:
@@ -17,8 +14,6 @@ secrets:
 
 metrics:
   path: "/backend/manage/prometheus"
-  username: management
-  password: test
 
 liveness:
   path: "/backend/manage/health/liveness"

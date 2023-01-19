@@ -3,20 +3,7 @@ ingress:
   name: grafana
   domain: romanow-alex.ru
 
-prometheusService: prometheus
-influxService: influxdb
-
 dashboards:
   - k6-results
   - spring-boot
-  - k8s-global
-  - k8s-namespaces
   - k8s-pods
-
-resources:
-  requests:
-    cpu: 500m
-    memory: 1024Mi
-  limits:
-    cpu: 500m
-    memory: 1024Mi

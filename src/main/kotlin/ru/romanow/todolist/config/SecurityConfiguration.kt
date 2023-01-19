@@ -4,6 +4,7 @@ import org.springframework.boot.actuate.autoconfigure.security.servlet.EndpointR
 import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.context.annotation.Bean
 import org.springframework.core.annotation.Order
+import org.springframework.http.HttpMethod.GET
 import org.springframework.http.HttpMethod.OPTIONS
 import org.springframework.http.HttpStatus.UNAUTHORIZED
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
@@ -67,7 +68,9 @@ class SecurityConfiguration(
         )
         return http
             .authorizeRequests {
-                it.antMatchers(OPTIONS).permitAll().anyRequest().authenticated()
+                it.antMatchers(OPTIONS).permitAll()
+                    .antMatchers(GET, "/").permitAll()
+                    .anyRequest().authenticated()
             }
             .oauth2ResourceServer {
                 it.authenticationManagerResolver(authenticationManagerResolver)
