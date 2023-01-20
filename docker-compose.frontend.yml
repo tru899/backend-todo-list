@@ -4,6 +4,8 @@ services:
     image: romanowalex/frontend-todo-list:v2.0
     container_name: frontend-todo-list
     restart: on-failure
+    environment:
+      BACKEND_HOST: backend-todo-list
     ports:
       - "80:80"
     networks:
