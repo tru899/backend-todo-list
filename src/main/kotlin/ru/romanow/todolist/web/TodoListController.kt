@@ -22,7 +22,7 @@ import ru.romanow.todolist.model.ListItem
 import ru.romanow.todolist.model.ValidationErrorResponse
 import ru.romanow.todolist.service.TodoListService
 import java.util.*
-import javax.validation.Valid
+import jakarta.validation.Valid
 
 @Tag(
     name = "TODO list Controller",

@@ -3,6 +3,7 @@ package ru.romanow.todolist.config
 import org.springframework.boot.actuate.autoconfigure.security.servlet.EndpointRequest.toAnyEndpoint
 import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.context.annotation.Bean
+import org.springframework.context.annotation.Configuration
 import org.springframework.core.annotation.Order
 import org.springframework.http.HttpMethod.GET
 import org.springframework.http.HttpMethod.OPTIONS
@@ -21,7 +22,7 @@ import org.springframework.security.web.authentication.HttpStatusEntryPoint
 import ru.romanow.todolist.config.properties.ActuatorSecurityProperties
 import ru.romanow.todolist.config.properties.OAuthLoginProperties
 
-
+@Configuration
 @EnableWebSecurity
 @EnableConfigurationProperties(value = [OAuthLoginProperties::class, ActuatorSecurityProperties::class])
 class SecurityConfiguration(
@@ -32,9 +33,7 @@ class SecurityConfiguration(
     @Order(FIRST)
     fun tokenSecurityFilterChain(http: HttpSecurity): SecurityFilterChain {
         return http
-            .requestMatchers {
-                it.antMatchers("/oauth2/authorization/**", "/login/oauth2/code/**")
-            }
+            .securityMatcher("/oauth2/authorization/**", "/login/oauth2/code/**")
             .oauth2Login {
                 it.defaultSuccessUrl("/callback", true)
             }
@@ -45,9 +44,9 @@ class SecurityConfiguration(
     @Order(SECOND)
     fun managementSecurityFilterChain(http: HttpSecurity): SecurityFilterChain {
         return http
-            .requestMatcher(toAnyEndpoint())
-            .authorizeRequests {
-                it.antMatchers("/manage/health/**", "/manage/prometheus")
+            .securityMatcher(toAnyEndpoint())
+            .authorizeHttpRequests {
+                it.requestMatchers("/manage/health/**", "/manage/prometheus")
                     .permitAll()
                     .anyRequest().hasRole(actuatorSecurityProperties.role)
             }
@@ -67,10 +66,10 @@ class SecurityConfiguration(
             "https://romanowalex.eu.auth0.com/"
         )
         return http
-            .authorizeRequests {
-                it.antMatchers(OPTIONS).permitAll()
-                    .antMatchers(GET, "/").permitAll()
-                    .anyRequest().authenticated()
+            .authorizeHttpRequests {
+                it.requestMatchers(OPTIONS).permitAll()
+                it.requestMatchers(GET, "/").permitAll()
+                it.anyRequest().authenticated()
             }
             .oauth2ResourceServer {
                 it.authenticationManagerResolver(authenticationManagerResolver)

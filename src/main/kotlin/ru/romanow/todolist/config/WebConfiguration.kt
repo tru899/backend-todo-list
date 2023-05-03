@@ -13,6 +13,6 @@ class WebConfiguration : WebMvcConfigurer {
         registry.addMapping("/**")
             .allowCredentials(true)
             .allowedOriginPatterns("http://localhost:[*]", "https://*.romanow-alex.ru")
-            .allowedMethods(GET.name, POST.name, OPTIONS.name, DELETE.name)
+            .allowedMethods(GET.name(), POST.name(), OPTIONS.name(), DELETE.name())
     }
 }
