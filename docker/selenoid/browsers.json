@@ -2,7 +2,7 @@
   "chrome": {
     "default": "latest",
     "versions": {
-      "108.0": {
+      "112.0": {
         "image": "selenoid/vnc:chrome_112.0",
         "port": "4444"
       }
