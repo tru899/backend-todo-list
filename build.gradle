@@ -15,8 +15,8 @@ plugins {
 ext {
     jwtVersion = "4.2.1"
     openApiVersion = "2.1.0"
-    selenideVersion = "6.7.2"
-    selenoidAdapterVersion = "2.3.3"
+    selenideVersion = "6.13.1"
+    selenoidAdapterVersion = "2.3.6"
     postgresContainerVersion = "1.17.0"
 }
 
@@ -85,7 +85,7 @@ class SeleniumTest extends Test {
 
         systemProperties["file.encoding"] = "UTF-8"
         systemProperties["selenide.browser"] = "chrome"
-        systemProperties["selenide.browserVersion"] = "108.0"
+        systemProperties["selenide.browserVersion"] = "112.0"
     }
 }
 

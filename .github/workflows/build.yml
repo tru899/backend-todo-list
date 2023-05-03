@@ -11,9 +11,9 @@ jobs:
 
       - uses: actions/setup-java@v2
         with:
-          distribution: 'adopt'
-          java-version: '11'
-          cache: 'gradle'
+          distribution: "adopt"
+          java-version: "11"
+          cache: "gradle"
 
       - name: Build project
         run: ./gradlew clean build
@@ -29,7 +29,7 @@ jobs:
         uses: mikepenz/action-junit-report@v2
         if: always()
         with:
-          report_paths: '**/build/test-results/test/TEST-*.xml'
+          report_paths: "**/build/test-results/test/TEST-*.xml"
 
   test:
     name: Integration Test
@@ -63,7 +63,7 @@ jobs:
           collection: tests/postman/collection.json
           environment: tests/postman/docker-environment.json
           delayRequest: 100
-          reporters: '[ "cli" ]'
+          reporters: "[ "cli" ]"
 
       - name: Stop containers
         if: always()
@@ -79,11 +79,11 @@ jobs:
 
       - uses: docker/setup-buildx-action@v2
 
-      - uses: actions/setup-java@v2
+      - uses: actions/setup-java@v3
         with:
-          distribution: 'adopt'
-          java-version: '11'
-          cache: 'gradle'
+          distribution: "corretto"
+          java-version: "17"
+          cache: "gradle"
 
       - uses: actions/download-artifact@v3
         with:
@@ -122,7 +122,7 @@ jobs:
         uses: mikepenz/action-junit-report@v2
         if: always()
         with:
-          report_paths: '**/build/test-results/test/TEST-*.xml'
+          report_paths: "**/build/test-results/test/TEST-*.xml"
 
       - name: Stop containers
         if: always()
