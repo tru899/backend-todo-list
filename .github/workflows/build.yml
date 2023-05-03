@@ -11,8 +11,8 @@ jobs:
 
       - uses: actions/setup-java@v2
         with:
-          distribution: "adopt"
-          java-version: "11"
+          distribution: "corretto"
+          java-version: "17"
           cache: "gradle"
 
       - name: Build project
