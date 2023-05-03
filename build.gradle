@@ -73,6 +73,7 @@ dependencies {
 
     guiImplementation "com.codeborne:selenide:$selenideVersion"
     guiImplementation "org.selenide:selenide-selenoid:$selenoidAdapterVersion"
+    guiImplementation "org.apache.httpcomponents.client5:httpclient5:5.2.1"
 }
 
 class SeleniumTest extends Test {
@@ -86,12 +87,13 @@ class SeleniumTest extends Test {
         systemProperties["file.encoding"] = "UTF-8"
         systemProperties["selenide.browser"] = "chrome"
         systemProperties["selenide.browserVersion"] = "112.0"
+        systemProperties["chromeoptions.args"] = "--remote-allow-origins=*"
     }
 }
 
-task selenoid(type: SeleniumTest) {}
+task selenide(type: SeleniumTest) {}
 
-task selenide(type: SeleniumTest) {
+task selenoid(type: SeleniumTest) {
     systemProperties["selenide.remote"] = "http://localhost:4444/wd/hub"
 }
 
