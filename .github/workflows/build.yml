@@ -111,7 +111,7 @@ jobs:
 
       - name: Run Selenium Tests
         timeout-minutes: 5
-        run: ./gradlew selenide
+        run: ./gradlew selenoid
 
       - name: List Selenoid logs
         if: failure()
