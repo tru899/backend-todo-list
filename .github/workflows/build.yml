@@ -107,7 +107,7 @@ jobs:
           WAIT_PORTS: 8080
 
       - name: Pull Chrome image
-        run: docker pull selenoid/vnc:chrome_108.0
+        run: docker pull selenoid/vnc:chrome_112.0
 
       - name: Run Selenium Tests
         timeout-minutes: 5
