@@ -7,7 +7,7 @@ services:
     ports:
       - "4444:4444"
     healthcheck:
-      test: "curl --fail http://localhost:4444/ping || exit 1"
+      test: [ "CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:4444/ping" ]
       interval: 10s
       timeout: 5s
       retries: 5
@@ -18,9 +18,10 @@ services:
   selenoid-ui:
     image: aerokube/selenoid-ui:1.10.11
     container_name: selenoid-ui
+    platform: linux/amd64
     command: [ "--selenoid-uri", "http://selenoid:4444" ]
     healthcheck:
-      test: "curl --fail http://localhost:8080/ping || exit 1"
+      test: [ "CMD", "/health-check" ]
       interval: 10s
       timeout: 5s
       retries: 5
