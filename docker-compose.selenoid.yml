@@ -1,19 +1,29 @@
 version: "3.9"
 services:
   selenoid:
-    image: aerokube/selenoid:1.10.8
+    image: aerokube/selenoid:1.10.11
     container_name: selenoid
     command: [ "-conf", "/etc/selenoid/browsers.json", "-container-network", "common" ]
     ports:
       - "4444:4444"
+    healthcheck:
+      test: "curl --fail http://localhost:4444/ping || exit 1"
+      interval: 10s
+      timeout: 5s
+      retries: 5
     volumes:
       - ./docker/selenoid/:/etc/selenoid/
       - /var/run/docker.sock:/var/run/docker.sock
 
   selenoid-ui:
-    image: aerokube/selenoid-ui:1.10.8
+    image: aerokube/selenoid-ui:1.10.11
     container_name: selenoid-ui
     command: [ "--selenoid-uri", "http://selenoid:4444" ]
+    healthcheck:
+      test: "curl --fail http://localhost:8080/ping || exit 1"
+      interval: 10s
+      timeout: 5s
+      retries: 5
     ports:
       - "8880:8080"
 

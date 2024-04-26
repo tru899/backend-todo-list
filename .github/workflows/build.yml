@@ -15,6 +15,9 @@ jobs:
           java-version: "17"
           cache: "gradle"
 
+      - name: Validate
+        uses: pre-commit/action@v3.0.0
+
       - name: Build project
         run: ./gradlew clean build
 
@@ -52,10 +55,7 @@ jobs:
       - name: Run containers
         timeout-minutes: 5
         run: |
-          docker compose up -d
-          ./scripts/wait-script.sh
-        env:
-          WAIT_PORTS: 8080
+          docker compose up -d --wait
 
       - name: Run API Tests
         uses: matt-ball/newman-action@master
@@ -101,13 +101,12 @@ jobs:
               -f docker-compose.yml \
               -f docker-compose.frontend.yml \
               -f docker-compose.selenoid.yml \
-              up -d
-          ./scripts/wait-script.sh
+              up -d --wait
         env:
           WAIT_PORTS: 8080
 
       - name: Pull Chrome image
-        run: docker pull selenoid/vnc:chrome_112.0
+        run: docker pull selenoid/vnc:chrome_124.0
 
       - name: Run Selenium Tests
         timeout-minutes: 5

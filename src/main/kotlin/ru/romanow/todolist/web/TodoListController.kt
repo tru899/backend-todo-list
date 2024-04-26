@@ -9,6 +9,7 @@ import io.swagger.v3.oas.annotations.media.Schema
 import io.swagger.v3.oas.annotations.responses.ApiResponse
 import io.swagger.v3.oas.annotations.security.SecurityScheme
 import io.swagger.v3.oas.annotations.tags.Tag
+import jakarta.validation.Valid
 import org.springframework.http.HttpStatus
 import org.springframework.http.MediaType
 import org.springframework.http.ResponseEntity
@@ -22,7 +23,7 @@ import ru.romanow.todolist.model.ListItem
 import ru.romanow.todolist.model.ValidationErrorResponse
 import ru.romanow.todolist.service.TodoListService
 import java.util.*
-import jakarta.validation.Valid
+
 
 @Tag(
     name = "TODO list Controller",
@@ -40,10 +41,12 @@ class TodoListController(
             ApiResponse(
                 responseCode = "200",
                 description = "Список всех записей TODO-листа",
-                content = [Content(
-                    mediaType = MediaType.APPLICATION_JSON_VALUE,
-                    array = ArraySchema(schema = Schema(implementation = ListItem::class))
-                )]
+                content = [
+                    Content(
+                        mediaType = MediaType.APPLICATION_JSON_VALUE,
+                        array = ArraySchema(schema = Schema(implementation = ListItem::class))
+                    )
+                ]
             )
         ]
     )
@@ -59,23 +62,29 @@ class TodoListController(
             ApiResponse(
                 responseCode = "201",
                 description = "Новая запись успешно добавлена",
-                headers = [Header(name = "Location", description = "Ссылка на список всех записей")]
+                headers = [
+                    Header(name = "Location", description = "Ссылка на список всех записей")
+                ]
             ),
             ApiResponse(
                 responseCode = "400",
                 description = "Ошибка валидации",
-                content = [Content(
-                    mediaType = MediaType.APPLICATION_JSON_VALUE,
-                    schema = Schema(implementation = ValidationErrorResponse::class)
-                )]
+                content = [
+                    Content(
+                        mediaType = MediaType.APPLICATION_JSON_VALUE,
+                        schema = Schema(implementation = ValidationErrorResponse::class)
+                    )
+                ]
             ),
             ApiResponse(
                 responseCode = "409",
                 description = "Запись с таким uid уже существует",
-                content = [Content(
-                    mediaType = MediaType.APPLICATION_JSON_VALUE,
-                    schema = Schema(implementation = ErrorResponse::class)
-                )]
+                content = [
+                    Content(
+                        mediaType = MediaType.APPLICATION_JSON_VALUE,
+                        schema = Schema(implementation = ErrorResponse::class)
+                    )
+                ]
             )
         ]
     )
@@ -83,10 +92,7 @@ class TodoListController(
     fun create(token: JwtAuthenticationToken, @Valid @RequestBody request: CreateItemRequest): ResponseEntity<Void> {
         val userId = token.tokenAttributes["email"] as String
         todoListService.create(userId, request)
-        return created(fromCurrentRequest()
-            .build()
-            .toUri())
-            .build()
+        return created(fromCurrentRequest().build().toUri()).build()
     }
 
     @Operation(

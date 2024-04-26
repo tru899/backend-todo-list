@@ -1,7 +1,9 @@
 spring:
   application.name: todo-list
-  main.banner-mode: off
-  profiles.active: local
+  profiles:
+    active: local
+  config:
+    import: optional:git.properties
   security:
     oauth2:
       client:
@@ -44,7 +46,8 @@ management:
       base-path: /manage
       exposure.include: info,health,loggers,prometheus
   health.diskspace.enabled: false
-  metrics.tags.application: ${spring.application.name}
+  metrics.tags:
+    application: ${spring.application.name}
   endpoint.health.show-details: always
   info.git.mode: simple
   health:

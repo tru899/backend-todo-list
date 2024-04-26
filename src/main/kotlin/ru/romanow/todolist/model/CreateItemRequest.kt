@@ -1,9 +1,9 @@
 package ru.romanow.todolist.model
 
-import java.util.*
 import jakarta.validation.constraints.NotBlank
 import jakarta.validation.constraints.NotNull
 import jakarta.validation.constraints.Size
+import java.util.*
 
 data class CreateItemRequest(
     @field:NotNull(message = "{field.is.null}")

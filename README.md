@@ -1,6 +1,7 @@
 # TODO list backed
 
 [![Build project](https://github.com/Romanow/backend-todo-list/actions/workflows/build.yml/badge.svg?branch=master)](https://github.com/Romanow/backend-todo-list/actions/workflows/build.yml)
+[![pre-commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit)](https://github.com/pre-commit/pre-commit)
 
 ## Создание авторизации в Google
 
@@ -17,10 +18,10 @@
 ```shell
 # сборка
 $ ./graldew clean build
-# запуск Postgres 13 в docker
+# запуск Postgres 15 в docker
 $ docker compose up postgres -d
 # локальный запуск
-$ ./gradlew bootRun --args='--spring.profiles.active=local'   
+$ ./gradlew bootRun --args='--spring.profiles.active=local'
 ```
 
 ### Deploy to k8s
@@ -67,13 +68,13 @@ $ kind load docker-image registry.k8s.io/kube-state-metrics/kube-state-metrics:v
 $ helm install kube-state-metrics prometheus-community/kube-state-metrics --set image.tag=v2.6.0
 
 $ kind load docker-image prom/prometheus:v2.40.0
-$ helm install prometheus -f prometheus/values.yaml romanow/prometheus 
+$ helm install prometheus -f prometheus/values.yaml romanow/prometheus
 
 $ kind load docker-image prom/node-exporter:v1.5.0
 $ helm install node-exporter romanow/node-exporter
 
 $ kind load docker-image influxdb:1.8.4
-$ helm install influxdb -f influxdb/values.yaml romanow/influxdb 
+$ helm install influxdb -f influxdb/values.yaml romanow/influxdb
 
 $ kind load docker-image grafana/grafana:8.3.4
 $ helm install grafana -f grafana/values.yaml romanow/grafana --set ingress.domain=ru
@@ -104,7 +105,7 @@ $ helm install \
     --set environments[0].name=INDEX_PAGE \
     --set environments[0].value=false \
     romanow/java-service
-    
+
 $ helm install \
     frontend-todo-list-v1 \
     -f frontend/values.yaml \
@@ -113,4 +114,3 @@ $ helm install \
     --set ingress.name=todo-list-v1 \
     romanow/frontend
 ```
-

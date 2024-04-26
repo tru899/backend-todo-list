@@ -13,7 +13,8 @@ import ru.romanow.todolist.model.ErrorDescription
 import ru.romanow.todolist.model.ErrorResponse
 import ru.romanow.todolist.model.ValidationErrorResponse
 import java.lang.RuntimeException
-import java.util.stream.Collectors
+import java.util.stream.Collectors.joining
+import java.util.stream.Collectors.toList
 
 @Hidden
 @RestControllerAdvice
@@ -41,18 +42,20 @@ class ExceptionController {
     }
 
     private fun buildMessage(bindingResult: BindingResult): String {
-        return String.format("Error on %s, rejected errors [%s]",
+        return String.format(
+            "Error on %s, rejected errors [%s]",
             bindingResult.target,
             bindingResult.allErrors
                 .stream()
                 .map { it.defaultMessage }
-                .collect(Collectors.joining(",")))
+                .collect(joining(","))
+        )
     }
 
     private fun buildErrors(bindingResult: BindingResult): List<ErrorDescription> {
         return bindingResult.fieldErrors
             .stream()
             .map { ErrorDescription(it.field, it.defaultMessage!!) }
-            .collect(Collectors.toList())
+            .collect(toList())
     }
 }

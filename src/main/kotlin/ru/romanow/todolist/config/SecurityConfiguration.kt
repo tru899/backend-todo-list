@@ -53,15 +53,14 @@ class SecurityConfiguration(
             .csrf { it.disable() }
             .formLogin { it.disable() }
             .sessionManagement { it.sessionCreationPolicy(STATELESS) }
-            .httpBasic()
-            .and()
+            .httpBasic {}
             .build()
     }
 
     @Bean
     @Order(THIRD)
     fun protectedResourceSecurityFilterChain(http: HttpSecurity): SecurityFilterChain {
-        val authenticationManagerResolver = JwtIssuerAuthenticationManagerResolver(
+        val authenticationManagerResolver = JwtIssuerAuthenticationManagerResolver.fromTrustedIssuers(
             "https://accounts.google.com",
             "https://romanowalex.eu.auth0.com/"
         )
@@ -78,8 +77,7 @@ class SecurityConfiguration(
                 it.authenticationEntryPoint(HttpStatusEntryPoint(UNAUTHORIZED))
             }
             .csrf { it.disable() }
-            .cors()
-            .and()
+            .cors { it.disable() }
             .build()
     }
 
