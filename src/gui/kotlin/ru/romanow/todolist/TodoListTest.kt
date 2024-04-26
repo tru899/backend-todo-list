@@ -36,7 +36,7 @@ class TodoListTest {
 
         results.loader().shouldBe(hidden)
         val items = results.itemsCount()
-        val itemsCount = items.size
+        val itemsCount = items.size()
 
         val item = page.addNewItem()
         items.shouldHave(size(itemsCount + 1))

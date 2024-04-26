@@ -12,8 +12,6 @@ plugins {
     id "com.adarshr.test-logger" version "3.2.0"
 }
 
-[compileKotlin, compileTestKotlin]*.kotlinOptions*.jvmTarget = "17"
-
 ext {
     jwtVersion = "4.2.1"
     openApiVersion = "2.5.0"
@@ -50,6 +48,8 @@ configurations {
     guiRuntimeOnly.extendsFrom testRuntimeOnly
 }
 
+[compileKotlin, compileTestKotlin, compileGuiKotlin]*.kotlinOptions*.jvmTarget = "17"
+
 dependencies {
     implementation "org.springframework.boot:spring-boot-starter-web"
     implementation "org.springframework.boot:spring-boot-starter-data-jpa"
@@ -78,7 +78,7 @@ dependencies {
     testImplementation "org.testcontainers:postgresql:$postgresContainerVersion"
 
     guiImplementation "com.codeborne:selenide:$selenideVersion"
-    guiImplementation "com.codeborn:selenide-selenoid:$selenideVersion"
+    guiImplementation "com.codeborne:selenide-selenoid:$selenideVersion"
 }
 
 class SeleniumTest extends Test {
