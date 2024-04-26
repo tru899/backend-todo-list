@@ -102,8 +102,6 @@ jobs:
               -f docker-compose.frontend.yml \
               -f docker-compose.selenoid.yml \
               up -d --wait
-        env:
-          WAIT_PORTS: 8080
 
       - name: Pull Chrome image
         run: docker pull selenoid/vnc:chrome_124.0

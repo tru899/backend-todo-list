@@ -16,7 +16,6 @@ ext {
     jwtVersion = "4.2.1"
     openApiVersion = "2.5.0"
     selenideVersion = "7.2.3"
-    selenoidAdapterVersion = "2.3.6"
     postgresContainerVersion = "1.19.7"
 }
 
