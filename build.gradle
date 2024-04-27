@@ -10,12 +10,14 @@ plugins {
     id "org.jlleitschuh.gradle.ktlint" version "12.1.0"
     id "com.gorylenko.gradle-git-properties" version "2.4.1"
     id "com.adarshr.test-logger" version "3.2.0"
+    id "io.qameta.allure" version "2.11.2"
 }
 
 ext {
     jwtVersion = "4.2.1"
     openApiVersion = "2.5.0"
     selenideVersion = "7.2.3"
+    allureSelenideVersion = "2.27.0"
     postgresContainerVersion = "1.19.7"
 }
 
@@ -78,6 +80,7 @@ dependencies {
 
     guiImplementation "com.codeborne:selenide:$selenideVersion"
     guiImplementation "com.codeborne:selenide-selenoid:$selenideVersion"
+    guiImplementation "io.qameta.allure:allure-selenide:$allureSelenideVersion"
 }
 
 class SeleniumTest extends Test {
@@ -92,6 +95,12 @@ class SeleniumTest extends Test {
         systemProperties["selenide.browser"] = "chrome"
         systemProperties["selenide.browserVersion"] = "124.0"
         systemProperties["chromeoptions.args"] = "--remote-allow-origins=*"
+    }
+}
+
+allure {
+    adapter {
+        allureJavaVersion = "2.19.0"
     }
 }
 

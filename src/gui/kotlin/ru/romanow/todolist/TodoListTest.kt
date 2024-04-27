@@ -3,6 +3,9 @@ package ru.romanow.todolist
 import com.codeborne.selenide.CollectionCondition.size
 import com.codeborne.selenide.Condition.*
 import com.codeborne.selenide.Selenide.open
+import com.codeborne.selenide.logevents.SelenideLogger
+import io.qameta.allure.selenide.AllureSelenide
+import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.MethodOrderer.OrderAnnotation
 import org.junit.jupiter.api.Order
@@ -50,5 +53,11 @@ class TodoListTest {
 
     companion object {
         private const val TODO_LIST_URL = "http://todo-list.ru"
+
+        @BeforeAll
+        @JvmStatic
+        fun allure() {
+            SelenideLogger.addListener("AllureSelenide", AllureSelenide())
+        }
     }
 }
