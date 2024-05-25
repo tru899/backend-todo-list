@@ -1,6 +1,7 @@
 package ru.romanow.todolist.config
 
 import org.springframework.boot.actuate.autoconfigure.security.servlet.EndpointRequest.toAnyEndpoint
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty
 import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
@@ -31,6 +32,7 @@ class SecurityConfiguration(
 
     @Bean
     @Order(FIRST)
+    @ConditionalOnProperty("oauth2.security.enabled", havingValue = "true", matchIfMissing = true)
     fun tokenSecurityFilterChain(http: HttpSecurity): SecurityFilterChain {
         return http
             .securityMatcher("/oauth2/authorization/**", "/login/oauth2/code/**")
@@ -59,6 +61,20 @@ class SecurityConfiguration(
 
     @Bean
     @Order(THIRD)
+    @ConditionalOnProperty("oauth2.security.enabled", havingValue = "false")
+    fun disabledSecurityFilterChain(http: HttpSecurity): SecurityFilterChain {
+        return http
+            .authorizeHttpRequests {
+                it.anyRequest().permitAll()
+            }
+            .csrf { it.disable() }
+            .cors { it.disable() }
+            .build()
+    }
+
+    @Bean
+    @Order(THIRD)
+    @ConditionalOnProperty("oauth2.security.enabled", havingValue = "true", matchIfMissing = true)
     fun protectedResourceSecurityFilterChain(http: HttpSecurity): SecurityFilterChain {
         val authenticationManagerResolver = JwtIssuerAuthenticationManagerResolver.fromTrustedIssuers(
             "https://accounts.google.com",

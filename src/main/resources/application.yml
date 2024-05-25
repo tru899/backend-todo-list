@@ -61,8 +61,10 @@ springdoc:
   default-produces-media-type: application/json
 
 oauth2:
+  security:
+    enabled: ${OAUTH2_SECURITY_ENABLED:true}
   login:
-    redirect-uri: /
+    redirect-uri: ${OAUTH2_LOGIN_REDIRECT_URI:/}
 
 index-page:
   enabled: ${INDEX_PAGE:true}

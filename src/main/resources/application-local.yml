@@ -7,14 +7,7 @@ spring:
   jpa:
     hibernate:
       ddl-auto: validate
-  security:
-    oauth2:
-      client:
-        registration:
-          google:
-            client-id:
-            client-secret: ${GOOGLE_CLIENT_SECRET}
 
 oauth2:
-  login:
-    redirect-uri: http://localhost:3000/
+  security:
+    enabled: false

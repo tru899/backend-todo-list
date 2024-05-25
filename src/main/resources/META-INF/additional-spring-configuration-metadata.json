@@ -1,6 +1,12 @@
 {
   "properties": [
     {
+      "name": "oauth2.security.enabled",
+      "type": "java.lang.Boolean",
+      "description": "Enable OAuth2 security.",
+      "defaultValue": "true"
+    },
+    {
       "name": "oauth2.login.redirect-uri",
       "type": "java.lang.String",
       "description": "Login redirect url for OAuth2."

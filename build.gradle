@@ -5,12 +5,12 @@ plugins {
     id "org.jetbrains.kotlin.plugin.jpa" version "1.9.22"
     id "org.jetbrains.kotlin.plugin.spring" version "1.9.22"
     id "org.jetbrains.kotlin.kapt" version "1.9.22"
-    id "org.springframework.boot" version "3.2.4"
+    id "org.springframework.boot" version "3.2.6"
     id "io.spring.dependency-management" version "1.1.3"
     id "org.jlleitschuh.gradle.ktlint" version "12.1.0"
     id "com.gorylenko.gradle-git-properties" version "2.4.1"
     id "com.adarshr.test-logger" version "3.2.0"
-    id "io.qameta.allure" version "2.11.2"
+//    id "io.qameta.allure" version "2.11.2"
 }
 
 ext {
@@ -18,7 +18,7 @@ ext {
     openApiVersion = "2.5.0"
     selenideVersion = "7.2.3"
     allureSelenideVersion = "2.27.0"
-    postgresContainerVersion = "1.19.7"
+    postgresContainerVersion = "1.19.8"
 }
 
 idea {
@@ -83,7 +83,7 @@ dependencies {
     guiImplementation "io.qameta.allure:allure-selenide:$allureSelenideVersion"
 }
 
-class SeleniumTest extends Test {
+abstract class SeleniumTest extends Test {
     SeleniumTest() {
         description = "Runs Selenium tests"
         group = "verification"
@@ -98,11 +98,11 @@ class SeleniumTest extends Test {
     }
 }
 
-allure {
-    adapter {
-        allureJavaVersion = "2.19.0"
-    }
-}
+//allure {
+//    adapter {
+//        allureJavaVersion = "2.19.0"
+//    }
+//}
 
 tasks.register("selenide", SeleniumTest) {}
 

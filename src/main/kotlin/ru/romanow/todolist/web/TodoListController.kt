@@ -51,8 +51,8 @@ class TodoListController(
         ]
     )
     @GetMapping(produces = [MediaType.APPLICATION_JSON_VALUE])
-    fun items(token: JwtAuthenticationToken): List<ListItem> {
-        val userId = token.tokenAttributes["email"] as String
+    fun items(token: JwtAuthenticationToken?): List<ListItem> {
+        val userId = getCurrentUser(token)
         return todoListService.findAll(userId)
     }
 
@@ -89,8 +89,8 @@ class TodoListController(
         ]
     )
     @PostMapping(consumes = [MediaType.APPLICATION_JSON_VALUE])
-    fun create(token: JwtAuthenticationToken, @Valid @RequestBody request: CreateItemRequest): ResponseEntity<Void> {
-        val userId = token.tokenAttributes["email"] as String
+    fun create(token: JwtAuthenticationToken?, @Valid @RequestBody request: CreateItemRequest): ResponseEntity<Void> {
+        val userId = getCurrentUser(token)
         todoListService.create(userId, request)
         return created(fromCurrentRequest().build().toUri()).build()
     }
@@ -101,8 +101,15 @@ class TodoListController(
     )
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping("/{uid}")
-    fun delete(token: JwtAuthenticationToken, @PathVariable uid: UUID) {
-        val userId = token.tokenAttributes["email"] as String
+    fun delete(token: JwtAuthenticationToken?, @PathVariable uid: UUID) {
+        val userId = getCurrentUser(token)
         todoListService.delete(userId, uid)
+    }
+
+    private fun getCurrentUser(token: JwtAuthenticationToken?): String =
+        token?.tokenAttributes?.get("email")?.toString() ?: DEFAULT_USER
+
+    companion object {
+        private const val DEFAULT_USER = "test@mail.ru"
     }
 }
