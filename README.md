@@ -24,6 +24,20 @@ $ docker compose up postgres -d
 $ ./gradlew bootRun --args='--spring.profiles.active=local'
 ```
 
+### Запуск тестов
+
+```shell
+$ brew install --cast chromedriver
+
+$ docker compose \
+  -f docker-compose.yml \
+  -f docker-compose.frontend.yml \
+  up -d --wait
+
+$ ./gradlew selenide
+
+```
+
 ### Deploy to k8s
 
 ```shell

@@ -24,6 +24,7 @@ services:
     container_name: backend-todo-list
     environment:
       SPRING_PROFILES_ACTIVE: docker
+      OAUTH2_SECURITY_ENABLED: true
       GOOGLE_CLIENT_ID: "${GOOGLE_CLIENT_ID:-''}"
       GOOGLE_CLIENT_SECRET: "${GOOGLE_CLIENT_SECRET:-''}"
     healthcheck:

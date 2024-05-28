@@ -10,7 +10,7 @@ plugins {
     id "org.jlleitschuh.gradle.ktlint" version "12.1.0"
     id "com.gorylenko.gradle-git-properties" version "2.4.1"
     id "com.adarshr.test-logger" version "3.2.0"
-//    id "io.qameta.allure" version "2.11.2"
+    id "io.qameta.allure" version "2.11.2"
 }
 
 ext {
@@ -93,16 +93,16 @@ abstract class SeleniumTest extends Test {
 
         systemProperties["file.encoding"] = "UTF-8"
         systemProperties["selenide.browser"] = "chrome"
-        systemProperties["selenide.browserVersion"] = "124.0"
+        systemProperties["selenide.browserVersion"] = "125.0"
         systemProperties["chromeoptions.args"] = "--remote-allow-origins=*"
     }
 }
 
-//allure {
-//    adapter {
-//        allureJavaVersion = "2.19.0"
-//    }
-//}
+allure {
+    adapter {
+        allureJavaVersion = "2.19.0"
+    }
+}
 
 tasks.register("selenide", SeleniumTest) {}
 
