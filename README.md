@@ -13,32 +13,16 @@
 3. Authorized redirect URIs -> `http://localhost:8080/login/oauth2/code/google`.
 4. Берем `Client ID` и `Client Secret` и добавляем их в secret.
 
-### Локальный запуск
+## Сборка
 
 ```shell
-# сборка
 $ ./graldew clean build
-# запуск Postgres 15 в docker
-$ docker compose up postgres -d
-# локальный запуск
+$ docker compose up postgres -d --wait
 $ ./gradlew bootRun --args='--spring.profiles.active=local'
-```
-
-### Запуск тестов
-
-```shell
-$ brew install --cast chromedriver
-
-$ docker compose \
-  -f docker-compose.yml \
-  -f docker-compose.frontend.yml \
-  up -d --wait
-
-$ ./gradlew selenide
 
 ```
 
-### Deploy to k8s
+## Запуск в локальном кластере k8s
 
 ```shell
 $ kind create cluster --config kind.yml
@@ -65,13 +49,29 @@ $ helm install frontend-todo-list -f frontend/values.yaml romanow/frontend --set
 $ echo "127.0.0.1        todo-list.ru" | sudo tee -a /etc/hosts
 ```
 
-## Интеграционное тестирование
+## Тестирование
+
+### Локальный запуск UI тестов
+
+```shell
+$ brew install --cast chromedriver
+
+$ docker compose \
+  -f docker-compose.yml \
+  -f docker-compose.frontend.yml \
+  up -d --wait
+
+$ ./gradlew selenide
+
+```
+
+### Интеграционное тестирование
 
 ```shell
 $ newman run -e kind-environment.json collection.json
 ```
 
-## Нагрузочное тестирование
+### Нагрузочное тестирование
 
 ```shell
 # устанавливаем prometheus + grafana и kube-state-metrics для мониторинга состояния кластера
@@ -104,27 +104,7 @@ $ k6 run \
     k6-load.js
 ```
 
-## Обновление версий приложения
+## TODO
 
-```shell
-# Базовая версия
-$ helm install postgres -f postgres/values.yaml romanow/postgres
-$ helm install backend-todo-list -f backend/values.yaml romanow/java-service
-$ helm install frontend-todo-list -f frontend/values.yaml --set ingress.domain=ru romanow/frontend
-
-# Новая версия (отсутствует index page)
-$ helm install \
-    backend-todo-list-v1 \
-    -f backend/values.yaml \
-    --set environments[0].name=INDEX_PAGE \
-    --set environments[0].value=false \
-    romanow/java-service
-
-$ helm install \
-    frontend-todo-list-v1 \
-    -f frontend/values.yaml \
-    --set backendServiceName=backend-todo-list-v1 \
-    --set ingress.domain=ru \
-    --set ingress.name=todo-list-v1 \
-    romanow/frontend
-```
+1. Слайд про GitHub Actions.
+2. Добавить скриншоты.
