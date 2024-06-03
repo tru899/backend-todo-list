@@ -12,5 +12,6 @@ Built from branch: ${git.branch}
 Commit id: ${git.commit.id.abbrev}
 Commit time: ${git.commit.time}
 ==========================================================================================
-Login redirect uri: ${oauth2.login.redirect-uri}
+OAuth2 security enabled: ${oauth2.security.enabled}
+OAuth2 login redirect uri: ${oauth2.login.redirect-uri}
 ==========================================================================================

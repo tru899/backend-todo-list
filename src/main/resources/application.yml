@@ -9,8 +9,8 @@ spring:
       client:
         registration:
           google:
-            client-id: ${GOOGLE_CLIENT_ID:}
-            client-secret: ${GOOGLE_CLIENT_SECRET:}
+            client-id: ${GOOGLE_CLIENT_ID:test}
+            client-secret: ${GOOGLE_CLIENT_SECRET:test}
             redirect-uri: ${GOOGLE_REDIRECT_URI:{baseUrl}/login/oauth2/code/google}
           auth0:
             client-id: ${AUTH0_CLIENT_ID:7uHBa1xYenYPjX7UhOonuGhOWvxLUwYM}
@@ -62,7 +62,7 @@ springdoc:
 
 oauth2:
   security:
-    enabled: ${OAUTH2_SECURITY_ENABLED:true}
+    enabled: ${OAUTH2_SECURITY_ENABLED:false}
   login:
     redirect-uri: ${OAUTH2_LOGIN_REDIRECT_URI:/}
 
