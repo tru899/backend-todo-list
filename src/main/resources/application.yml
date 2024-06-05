@@ -62,7 +62,7 @@ springdoc:
 
 oauth2:
   security:
-    enabled: ${OAUTH2_SECURITY_ENABLED:false}
+    enabled: ${OAUTH2_SECURITY_ENABLED:true}
   login:
     redirect-uri: ${OAUTH2_LOGIN_REDIRECT_URI:/}
 
