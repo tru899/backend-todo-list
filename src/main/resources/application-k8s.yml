@@ -7,3 +7,13 @@ spring:
   jpa:
     hibernate:
       ddl-auto: none
+
+management:
+  otlp.tracing.endpoint: http://jaeger:4318/v1/traces
+  tracing:
+    enabled: true
+    sampling.probability: 1.0
+
+logging:
+  pattern:
+    correlation: "[${spring.application.name},%X{traceId:-},%X{spanId:-}]"

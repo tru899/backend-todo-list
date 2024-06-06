@@ -35,6 +35,8 @@ server:
         max-age: 86400
 
 management:
+  tracing:
+    enabled: false
   credentials:
     user: management
     password: test
