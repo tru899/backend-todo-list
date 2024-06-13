@@ -27,7 +27,7 @@ jobs:
           TF_VAR_do_token: ${{ secrets.DIGITAL_OCEAN_TOKEN }}
 
       - name: Setup k8s config
-        run: doctl kubernetes cluster kubeconfig save --expiry-seconds 600 ${{ vars.CLUSTER_NAME }}
+        run: doctl kubernetes cluster kubeconfig save --expiry-seconds 3600 ${{ vars.CLUSTER_NAME }}
 
       - name: Add helm repos
         run: |
