@@ -41,13 +41,22 @@ jobs:
 
       - name: Install TODO List
         run: |
-          helm upgrade --install postgres romanow/postgres --values k8s/postgres/values.yaml --wait
-          helm upgrade --install backend-todo-list romanow/postgres --values k8s/todo-list/backend.yaml --wait
-          helm upgrade --install frontend-todo-list romanow/postgres --values k8s/todo-list/frontend.yaml --wait
+          helm upgrade --install postgres romanow/postgres \
+            --values k8s/postgres/values.yaml \
+            --wait --timeout 10m
+          helm upgrade --install backend-todo-list romanow/postgres \
+            --values k8s/todo-list/backend.yaml \
+            --wait --timeout 10m
+          helm upgrade --install frontend-todo-list romanow/postgres \
+            --values k8s/todo-list/frontend.yaml \
+            --wait --timeout 10m
 
   test:
     name: UI Test
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        browser: [ "chrome", "firefox" ]
     needs: create-cluster
     steps:
       - uses: actions/checkout@v4
@@ -59,7 +68,9 @@ jobs:
           cache: "gradle"
 
       - name: Run tests
-        run: ./gradlew moon -Pbrowser=chrome -Pbase-url=https://todo-list.romanow-alex.ru
+        run: ./gradlew moon \
+          -Pbrowser=${{ matrix.browser }} \
+          -Pbase-url=https://todo-list.romanow-alex.ru
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
@@ -104,7 +115,7 @@ jobs:
           publish_dir: allure-history
 
   destroy-cluster:
-    name: Publish to Docker Hub
+    name: Destroy Cluster
     runs-on: ubuntu-latest
     if: ${{ !cancelled() }}
     needs: [ test, create-cluster ]
