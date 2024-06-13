@@ -36,7 +36,7 @@ server:
 
 management:
   tracing:
-    enabled: false
+    enabled: ${TRACING_ENABLED:true}
   credentials:
     user: management
     password: test

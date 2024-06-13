@@ -3,7 +3,7 @@ package ru.romanow.todolist.login
 import com.codeborne.selenide.Selectors.byId
 import com.codeborne.selenide.Selenide.`$`
 import org.openqa.selenium.By.cssSelector
-import ru.romanow.todolist.LOGIN_FORM_OAUTH0_BUTTON
+import ru.romanow.todolist.utils.LOGIN_FORM_OAUTH0_BUTTON
 
 class LoginPage {
     fun authorize() {

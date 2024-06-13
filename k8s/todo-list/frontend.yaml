@@ -2,13 +2,13 @@ image:
   repository: romanowalex/frontend-todo-list
   tag: v2.0
 
-port: 3000
+port: 80
 backendServiceName: backend-todo-list
 
 ingress:
   enabled: true
   name: todo-list
-  domain: romanow-alex.ru
+  domain: ru
 
 resources:
   requests:

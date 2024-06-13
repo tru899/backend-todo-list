@@ -1,8 +1,13 @@
+---
 image:
   repository: romanowalex/backend-todo-list
-  tag: v2.0
+  tag: v2.1
 
 profile: k8s
+
+environments:
+  - name: TRACING_ENABLED
+    value: "false"
 
 secrets:
   - name: GOOGLE_CLIENT_ID
@@ -23,8 +28,8 @@ readiness:
 
 resources:
   requests:
-    cpu: 1
-    memory: 2048Mi
+    cpu: 500m
+    memory: 1024Mi
   limits:
-    cpu: 1
-    memory: 2048Mi
+    cpu: 500m
+    memory: 1024Mi

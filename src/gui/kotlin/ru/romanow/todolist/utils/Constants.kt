@@ -1,4 +1,4 @@
-package ru.romanow.todolist
+package ru.romanow.todolist.utils
 
 const val LOADER = "loader"
 const val LOGIN_FORM_MODAL_NAME = "login-form-authorize-modal"

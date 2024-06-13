@@ -1,9 +1,0 @@
-ingress:
-  enabled: true
-  name: grafana
-  domain: romanow-alex.ru
-
-dashboards:
-  - k6-results
-  - spring-boot
-  - k8s-pods

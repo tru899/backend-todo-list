@@ -93,10 +93,12 @@ abstract class SeleniumTest extends Test {
         testClassesDirs = project.sourceSets.gui.output.classesDirs
         classpath = project.sourceSets.gui.runtimeClasspath
 
+
         systemProperties["file.encoding"] = "UTF-8"
-        systemProperties["selenide.browser"] = "chrome"
-        systemProperties["selenide.browserVersion"] = "125.0"
-        systemProperties["chromeoptions.args"] = "--remote-allow-origins=*"
+        systemProperties["selenide.browser"] = project.findProperty("browser") ?: "chrome"
+        systemProperties["base-url"] = project.findProperty("base-url") ?: "http://todo-list.ru"
+        systemProperties["chromeoptions.args"] = "--disable-web-security"
+        outputs.upToDateWhen {false}
     }
 }
 
@@ -110,6 +112,10 @@ tasks.register("selenide", SeleniumTest) {}
 
 tasks.register("selenoid", SeleniumTest) {
     systemProperties["selenide.remote"] = "http://localhost:4444/wd/hub"
+}
+
+tasks.register("moon", SeleniumTest) {
+    systemProperties["selenide.remote"] = "https://moon.romanow-alex.ru/wd/hub"
 }
 
 tasks.withType(Test).configureEach {

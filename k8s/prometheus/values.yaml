@@ -1,7 +1,37 @@
-resources:
-  requests:
-    cpu: 300m
-    memory: 1024Mi
-  limits:
-    cpu: 300m
-    memory: 1024Mi
+---
+alertmanager:
+  enabled: false
+
+grafana:
+  adminPassword: admin
+  dashboardProviders:
+    dashboard_providers.yaml:
+      apiVersion: 1
+      providers:
+        - name: "main-provider"
+          orgId: 1
+          folder: ""
+          type: file
+          updateIntervalSeconds: 10
+          disableDeletion: true
+          editable: true
+          options:
+            path: /var/lib/grafana/dashboards/main-provider
+  dashboards:
+    main-provider:
+      spring-boot:
+        gnetId: 10280
+        revision: 1
+        datasource: Prometheus
+      node-exporter:
+        gnetId: 1860
+        revision: 37
+        datasource:
+          name: DS_PROMETHEUS
+          value: Prometheus
+  ingress:
+    enabled: true
+    annotations:
+      kubernetes.io/ingress.class: nginx
+    hosts:
+      - grafana.local

@@ -52,7 +52,7 @@ class TodoListTest {
     }
 
     companion object {
-        private const val TODO_LIST_URL = "http://todo-list.ru"
+        private val TODO_LIST_URL = System.getProperty("base-url")
 
         @BeforeAll
         @JvmStatic
