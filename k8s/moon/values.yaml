@@ -1,6 +1,6 @@
 ---
 ingress:
-  host: moon.local
+  host: moon.romanow-alex.ru
 
 deployment:
   replicas: 1

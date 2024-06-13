@@ -52,7 +52,7 @@ $ kubectl create secret generic credentials \
 
 $ helm install postgres -f postgres/values.yaml romanow/postgres
 $ helm install backend-todo-list -f todo-list/backend.yaml romanow/java-service
-$ helm install frontend-todo-list -f todo-list/frontend.yaml romanow/frontend
+$ helm install frontend-todo-list -f todo-list/frontend.yaml romanow/frontend --set ingres.domain=local
 
 ```
 
@@ -78,7 +78,9 @@ $ ./gradlew selenide
 $ minikube start --cpus=4 --memory=8G --driver=hyperkit
 $ minikube addons enable ingress
 
-$ helm upgrade --install moon aerokube/moon2 --values moon/values.yaml
+$ helm repo add aerokube https://charts.aerokube.com/
+$ helm search repo romanow
+$ helm upgrade --install moon aerokube/moon2 --values moon/values.yaml --set ingress.host=moon.local
 
 $ echo "$(minikube ip)    moon.local" | sudo tee -a /etc/hosts
 ```

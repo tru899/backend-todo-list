@@ -8,7 +8,7 @@ backendServiceName: backend-todo-list
 ingress:
   enabled: true
   name: todo-list
-  domain: ru
+  domain: romanow-alex.ru
 
 resources:
   requests:
