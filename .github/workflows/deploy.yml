@@ -15,7 +15,7 @@ jobs:
       - name: Install DigitalOcean
         uses: digitalocean/action-doctl@v2
         with:
-          token: ${{ secrets.DIGITALOCEAN_TOKEN }}
+          token: ${{ secrets.DIGITAL_OCEAN_TOKEN }}
 
       - name: Terraform deploy
         run: |
