@@ -29,7 +29,7 @@ variable "cluster_tags" {
 
 variable "cluster_node_count" {
   type        = number
-  default     = 3
+  default     = 4
   description = "Cluster node count"
 }
 
