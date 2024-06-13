@@ -4,6 +4,7 @@ jobs:
   create-cluster:
     name: Create Cluster
     runs-on: ubuntu-latest
+    environment: test
     steps:
       - uses: actions/checkout@v4
 
@@ -35,25 +36,20 @@ jobs:
           helm repo add aerokube https://charts.aerokube.com/
           helm repo update
 
+      - name: Install TODO List
+        run: |
+          helm upgrade --install postgres romanow/postgres --values k8s/postgres/values.yaml --wait
+          helm upgrade --install backend-todo-list romanow/postgres --values k8s/todo-list/backend.yaml --wait
+          helm upgrade --install frontend-todo-list romanow/postgres --values k8s/todo-list/frontend.yaml --wait
+
       - name: Install Moon in cluster
         run: |
           helm upgrade --install moon aerokube/moon2 --values k8s/moon/values.yaml
 
-      - name: Install TODO List
-        run: |
-          helm upgrade --install postgres romanow/postgres \
-            --values k8s/postgres/values.yaml \
-            --wait --timeout 10m
-          helm upgrade --install backend-todo-list romanow/postgres \
-            --values k8s/todo-list/backend.yaml \
-            --wait --timeout 10m
-          helm upgrade --install frontend-todo-list romanow/postgres \
-            --values k8s/todo-list/frontend.yaml \
-            --wait --timeout 10m
-
   test:
     name: UI Test
     runs-on: ubuntu-latest
+    environment: test
     strategy:
       matrix:
         browser: [ "chrome", "firefox" ]
@@ -119,6 +115,7 @@ jobs:
     runs-on: ubuntu-latest
     if: ${{ !cancelled() }}
     needs: [ test, create-cluster ]
+    environment: test
     steps:
       - uses: actions/checkout@v4
 
