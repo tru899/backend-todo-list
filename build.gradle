@@ -115,7 +115,7 @@ tasks.register("selenoid", SeleniumTest) {
 }
 
 tasks.register("moon", SeleniumTest) {
-    systemProperties["selenide.remote"] = "https://moon.romanow-alex.ru/wd/hub"
+    systemProperties["selenide.remote"] = "http://moon.romanow-alex.ru/wd/hub"
 }
 
 tasks.withType(Test).configureEach {

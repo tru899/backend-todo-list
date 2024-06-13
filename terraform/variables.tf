@@ -53,6 +53,6 @@ variable "cluster_size" {
 
 variable "hostnames" {
   type        = list(string)
-  default     = ["moon"]
+  default     = ["moon", "todo-list"]
   description = "Hostnames"
 }

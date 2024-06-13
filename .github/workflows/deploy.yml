@@ -40,11 +40,11 @@ jobs:
         run: |
           helm upgrade --install postgres romanow/postgres --values k8s/postgres/values.yaml --wait
           helm upgrade --install backend-todo-list romanow/java-service --values k8s/todo-list/backend.yaml --wait
-          helm upgrade --install frontend-todo-list romanow/java-service --values k8s/todo-list/frontend.yaml --wait
+          helm upgrade --install frontend-todo-list romanow/frontend --values k8s/todo-list/frontend.yaml --wait
 
       - name: Install Moon in cluster
         run: |
-          helm upgrade --install moon aerokube/moon2 --values k8s/moon/values.yaml
+          helm upgrade --install moon aerokube/moon2 --values k8s/moon/values.yaml --wait
 
   test:
     name: UI Test
@@ -66,7 +66,7 @@ jobs:
       - name: Run tests
         run: ./gradlew moon \
           -Pbrowser=${{ matrix.browser }} \
-          -Pbase-url=https://todo-list.romanow-alex.ru
+          -Pbase-url=https://frontend-todo-list
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
