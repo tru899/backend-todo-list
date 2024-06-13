@@ -9,14 +9,6 @@ environments:
   - name: TRACING_ENABLED
     value: "false"
 
-secrets:
-  - name: GOOGLE_CLIENT_ID
-    secretName: credentials
-    secretKey: google-client-id
-  - name: GOOGLE_CLIENT_SECRET
-    secretName: credentials
-    secretKey: google-client-id
-
 metrics:
   path: "/backend/manage/prometheus"
 
