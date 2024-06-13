@@ -39,8 +39,8 @@ jobs:
       - name: Install TODO List
         run: |
           helm upgrade --install postgres romanow/postgres --values k8s/postgres/values.yaml --wait
-          helm upgrade --install backend-todo-list romanow/postgres --values k8s/todo-list/backend.yaml --wait
-          helm upgrade --install frontend-todo-list romanow/postgres --values k8s/todo-list/frontend.yaml --wait
+          helm upgrade --install backend-todo-list romanow/java-service --values k8s/todo-list/backend.yaml --wait
+          helm upgrade --install frontend-todo-list romanow/java-service --values k8s/todo-list/frontend.yaml --wait
 
       - name: Install Moon in cluster
         run: |
