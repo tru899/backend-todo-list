@@ -4,6 +4,7 @@ import com.codeborne.selenide.CollectionCondition.size
 import com.codeborne.selenide.Condition.*
 import com.codeborne.selenide.Selenide.open
 import com.codeborne.selenide.logevents.SelenideLogger
+import io.qameta.allure.Step
 import io.qameta.allure.selenide.AllureSelenide
 import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.BeforeEach
@@ -26,6 +27,7 @@ class TodoListTest {
 
     @Test
     @Order(1)
+    @Step("Авторизация")
     fun login() {
         LoginPageResults().loginModal().exists()
         LoginPage().authorize()
@@ -33,6 +35,7 @@ class TodoListTest {
 
     @Test
     @Order(2)
+    @Step("Добавление и удаление элементов")
     fun items() {
         val page = TodoListPage()
         val results = TodoListPageResults()
