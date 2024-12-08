@@ -1,4 +1,3 @@
-version: "3.9"
 services:
   frontend-todo-list:
     image: romanowalex/frontend-todo-list:v2.0
