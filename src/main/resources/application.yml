@@ -4,25 +4,6 @@ spring:
     active: local
   config:
     import: optional:git.properties
-  security:
-    oauth2:
-      client:
-        registration:
-          google:
-            client-id: ${GOOGLE_CLIENT_ID:test}
-            client-secret: ${GOOGLE_CLIENT_SECRET:test}
-            redirect-uri: ${GOOGLE_REDIRECT_URI:{baseUrl}/login/oauth2/code/google}
-          auth0:
-            client-id: ${AUTH0_CLIENT_ID:7uHBa1xYenYPjX7UhOonuGhOWvxLUwYM}
-            client-secret: ${AUTH0_CLIENT_SECRET:TbNIL8SJx38sDDweRqWsRaqWKU7Q6UrWr0f6DzKwlLh48892GE4KfoKR1cfIe87e}
-            redirect-uri: ${AUTH0_REDIRECT_URI:{baseUrl}/login/oauth2/code/auth0}
-            scope:
-              - openid
-              - email
-              - profile
-        provider:
-          auth0:
-            issuer-uri: ${AUTH0_ISSUER_URI:https://romanowalex.eu.auth0.com/}
 
 server:
   port: 8080
@@ -36,7 +17,7 @@ server:
 
 management:
   tracing:
-    enabled: ${TRACING_ENABLED:true}
+    enabled: ${TRACING_ENABLED:false}
   credentials:
     user: management
     password: test
@@ -64,7 +45,7 @@ springdoc:
 
 oauth2:
   security:
-    enabled: ${OAUTH2_SECURITY_ENABLED:true}
+    enabled: ${OAUTH2_SECURITY_ENABLED:false}
   login:
     redirect-uri: ${OAUTH2_LOGIN_REDIRECT_URI:/}
 

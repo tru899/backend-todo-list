@@ -19,13 +19,13 @@ services:
 
   backend-todo-list:
     build: .
-    image: romanowalex/backend-todo-list:v2.1
+    image: romanowalex/backend-todo-list:v2.2
     container_name: backend-todo-list
+    restart: on-failure
     environment:
-      SPRING_PROFILES_ACTIVE: docker
+      SPRING_PROFILES_ACTIVE: docker,keycloak,auth0
       OAUTH2_SECURITY_ENABLED: true
-      GOOGLE_CLIENT_ID: "${GOOGLE_CLIENT_ID:-''}"
-      GOOGLE_CLIENT_SECRET: "${GOOGLE_CLIENT_SECRET:-''}"
+      KEYCLOAK_ISSUER_URI: http://keycloak:8100/realms/todo-list
     healthcheck:
       test: [ "CMD", "curl", "--silent", "--fail", "http://localhost:8080/backend/manage/health" ]
       interval: 10s

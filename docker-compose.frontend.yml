@@ -2,8 +2,6 @@ services:
   frontend-todo-list:
     image: romanowalex/frontend-todo-list:v2.0
     container_name: frontend-todo-list
-    platform: linux/amd64
-    restart: on-failure
     environment:
       BACKEND_HOST: backend-todo-list
     healthcheck:

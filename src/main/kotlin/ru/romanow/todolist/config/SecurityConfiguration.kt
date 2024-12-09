@@ -16,7 +16,6 @@ import org.springframework.security.core.userdetails.User
 import org.springframework.security.core.userdetails.UserDetailsService
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.security.crypto.password.PasswordEncoder
-import org.springframework.security.oauth2.server.resource.authentication.JwtIssuerAuthenticationManagerResolver
 import org.springframework.security.provisioning.InMemoryUserDetailsManager
 import org.springframework.security.web.SecurityFilterChain
 import org.springframework.security.web.authentication.HttpStatusEntryPoint
@@ -68,7 +67,6 @@ class SecurityConfiguration(
                 it.anyRequest().permitAll()
             }
             .csrf { it.disable() }
-            .cors { it.disable() }
             .build()
     }
 
@@ -76,24 +74,17 @@ class SecurityConfiguration(
     @Order(THIRD)
     @ConditionalOnProperty("oauth2.security.enabled", havingValue = "true", matchIfMissing = true)
     fun protectedResourceSecurityFilterChain(http: HttpSecurity): SecurityFilterChain {
-        val authenticationManagerResolver = JwtIssuerAuthenticationManagerResolver.fromTrustedIssuers(
-            "https://accounts.google.com",
-            "https://romanowalex.eu.auth0.com/"
-        )
         return http
             .authorizeHttpRequests {
                 it.requestMatchers(OPTIONS).permitAll()
                 it.requestMatchers(GET, "/").permitAll()
                 it.anyRequest().authenticated()
             }
-            .oauth2ResourceServer {
-                it.authenticationManagerResolver(authenticationManagerResolver)
-            }
             .exceptionHandling {
                 it.authenticationEntryPoint(HttpStatusEntryPoint(UNAUTHORIZED))
             }
             .csrf { it.disable() }
-            .cors { it.disable() }
+            .cors { }
             .build()
     }
 
