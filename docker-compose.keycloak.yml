@@ -22,10 +22,11 @@ services:
       timeout: 5s
       retries: 10
     volumes:
-      - keycloak-data:/bitnami/keycloak
+      - keycloak:/bitnami/keycloak
+      - ./docker/keycloak/:/docker-entrypoint-initdb.d/
     depends_on:
       postgres:
         condition: service_healthy
 
 volumes:
-  keycloak-data:
+  keycloak:

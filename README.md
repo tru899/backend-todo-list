@@ -1,6 +1,6 @@
 # TODO list backed
 
-[![Build project](https://github.com/Romanow/backend-todo-list/actions/workflows/build.yml/badge.svg?branch=master)](https://github.com/Romanow/backend-todo-list/actions/workflows/build.yml)
+[![CI](https://github.com/Romanow/backend-todo-list/actions/workflows/build.yml/badge.svg?branch=master)](https://github.com/Romanow/backend-todo-list/actions/workflows/build.yml)
 [![pre-commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit)](https://github.com/pre-commit/pre-commit)
 [![Release](https://img.shields.io/github/v/release/Romanow/backend-todo-list?logo=github&sort=semver)](https://github.com/Romanow/backend-todo-list/releases/latest)
 [![Docker Pulls](https://img.shields.io/docker/pulls/romanowalex/backend-todo-list?logo=docker)](https://hub.docker.com/r/romanowalex/backend-todo-list)
@@ -98,6 +98,7 @@ $ echo "$(minikube ip)    moon.local" | sudo tee -a /etc/hosts
 
 ```shell
 $ newman run -e kind-environment.json collection.json
+
 ```
 
 ### Нагрузочное тестирование
@@ -108,11 +109,12 @@ $ kubectl apply -f prometheus-stack/todo-list.yml
 $ echo "$(minikube ip)    grafana.local" | sudo tee -a /etc/hosts
 
 $ brew install k6
-$ K6_WEB_DASHBOARD=true K6_WEB_DASHBOARD_EXPORT=report.html  k6 run \
+$ K6_WEB_DASHBOARD=true K6_WEB_DASHBOARD_EXPORT=report.html k6 run \
     -e HOSTNAME=todo-list.ru \
     -e USERNAME=ronin@romanow-alex.ru \
     -e PASSWORD=Qwerty123 \
     -e CLIENT_ID=7uHBa1xYenYPjX7UhOonuGhOWvxLUwYM \
     -e CLIENT_SECRET=TbNIL8SJx38sDDweRqWsRaqWKU7Q6UrWr0f6DzKwlLh48892GE4KfoKR1cfIe87e \
     k6-load.js
+
 ```

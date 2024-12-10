@@ -14,7 +14,7 @@ services:
       retries: 10
     volumes:
       - ./docker/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
-      - prometheus-data:/prometheus
+      - prometheus:/prometheus
     depends_on:
       cadvisor:
         condition: service_healthy
@@ -35,21 +35,6 @@ services:
       - /var/lib/docker/:/var/lib/docker:ro
       - /var/run/docker.sock:/var/run/docker.sock:rw
 
-  influxdb:
-    image: influxdb:1.8
-    container_name: influxdb
-    environment:
-      - INFLUXDB_DB=k6
-    ports:
-      - "8086:8086"
-    healthcheck:
-      test: [ "CMD", "curl", "-f", "http://localhost:8086/ping" ]
-      interval: 5s
-      timeout: 10s
-      retries: 5
-    volumes:
-      - influxdb-data:/var/lib/influxdb
-
   grafana:
     image: grafana/grafana:8.3.4
     container_name: grafana
@@ -66,7 +51,7 @@ services:
       timeout: 15s
       retries: 10
     volumes:
-      - grafana-data:/var/lib/grafana
+      - grafana:/var/lib/grafana
       - ./docker/grafana/:/etc/grafana/provisioning/
     depends_on:
       prometheus:
@@ -75,6 +60,5 @@ services:
         condition: service_healthy
 
 volumes:
-  prometheus-data:
-  influxdb-data:
-  grafana-data:
+  prometheus:
+  grafana:
