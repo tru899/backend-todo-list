@@ -2,6 +2,7 @@ package ru.romanow.todolist.config
 
 import org.springframework.boot.actuate.autoconfigure.security.servlet.EndpointRequest.toAnyEndpoint
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty
+import org.springframework.boot.autoconfigure.security.oauth2.client.OAuth2ClientProperties
 import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
@@ -16,6 +17,7 @@ import org.springframework.security.core.userdetails.User
 import org.springframework.security.core.userdetails.UserDetailsService
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.security.crypto.password.PasswordEncoder
+import org.springframework.security.oauth2.server.resource.authentication.JwtIssuerAuthenticationManagerResolver.*
 import org.springframework.security.provisioning.InMemoryUserDetailsManager
 import org.springframework.security.web.SecurityFilterChain
 import org.springframework.security.web.authentication.HttpStatusEntryPoint
@@ -73,12 +75,24 @@ class SecurityConfiguration(
     @Bean
     @Order(THIRD)
     @ConditionalOnProperty("oauth2.security.enabled", havingValue = "true", matchIfMissing = true)
-    fun protectedResourceSecurityFilterChain(http: HttpSecurity): SecurityFilterChain {
+    fun protectedResourceSecurityFilterChain(
+        http: HttpSecurity, properties: OAuth2ClientProperties
+    ): SecurityFilterChain {
+        val sources = mutableListOf<String>()
+        for (p in PROVIDERS) {
+            if (properties.provider.containsKey(p)) {
+                sources.add(properties.provider[p]!!.issuerUri)
+            }
+        }
+        val authenticationManagerResolver = fromTrustedIssuers(sources)
         return http
             .authorizeHttpRequests {
                 it.requestMatchers(OPTIONS).permitAll()
                 it.requestMatchers(GET, "/").permitAll()
                 it.anyRequest().authenticated()
+            }
+            .oauth2ResourceServer {
+                it.authenticationManagerResolver(authenticationManagerResolver)
             }
             .exceptionHandling {
                 it.authenticationEntryPoint(HttpStatusEntryPoint(UNAUTHORIZED))
@@ -107,5 +121,6 @@ class SecurityConfiguration(
         private const val FIRST = 1
         private const val SECOND = 2
         private const val THIRD = 3
+        private val PROVIDERS = listOf("google", "auth0", "keycloak")
     }
 }
