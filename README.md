@@ -3,7 +3,9 @@
 [![Build project](https://github.com/Romanow/backend-todo-list/actions/workflows/build.yml/badge.svg?branch=master)](https://github.com/Romanow/backend-todo-list/actions/workflows/build.yml)
 [![pre-commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit)](https://github.com/pre-commit/pre-commit)
 
-## Создание авторизации в Google
+## Настройка авторизации
+
+### Google
 
 Зайти в [Google Cloud Platform](https://console.cloud.google.com/):
 
@@ -15,14 +17,19 @@
 
 ## Сборка
 
+### Локальный запуск
+
 ```shell
 $ ./graldew clean build
-$ docker compose up postgres -d --wait
-$ ./gradlew bootRun --args='--spring.profiles.active=local'
+$ docker compose \
+    -f docker-compose.yml \
+    -f docker-compose.frontend.yml \
+    up -d --wait
 
+$ echo "127.0.0.1    todo-list.ru" | sudo tee -a /etc/hosts
 ```
 
-## Запуск в локальном кластере k8s
+### Запуск в локальном кластере k8s
 
 Запуск [Kind](https://kind.sigs.k8s.io/):
 
@@ -52,7 +59,7 @@ $ kubectl create secret generic credentials \
 
 $ helm install postgres -f postgres/values.yaml romanow/postgres
 $ helm install backend-todo-list -f todo-list/backend.yaml romanow/java-service
-$ helm install frontend-todo-list -f todo-list/frontend.yaml romanow/frontend --set ingres.domain=local
+$ helm install frontend-todo-list -f todo-list/frontend.yaml romanow/frontend --set ingres.domain=ru
 
 ```
 
@@ -62,7 +69,6 @@ $ helm install frontend-todo-list -f todo-list/frontend.yaml romanow/frontend --
 
 ```shell
 $ brew install --cast chromedriver
-
 $ docker compose \
   -f docker-compose.yml \
   -f docker-compose.frontend.yml \
@@ -107,8 +113,3 @@ $ K6_WEB_DASHBOARD=true K6_WEB_DASHBOARD_EXPORT=report.html  k6 run \
     -e CLIENT_SECRET=TbNIL8SJx38sDDweRqWsRaqWKU7Q6UrWr0f6DzKwlLh48892GE4KfoKR1cfIe87e \
     k6-load.js
 ```
-
-## TODO
-
-1. Слайд про GitHub Actions.
-2. Добавить скриншоты.
