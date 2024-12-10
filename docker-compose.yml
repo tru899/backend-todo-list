@@ -23,8 +23,8 @@ services:
     container_name: backend-todo-list
     restart: on-failure
     environment:
-      SPRING_PROFILES_ACTIVE: docker,keycloak,auth0
-      OAUTH2_SECURITY_ENABLED: true
+      SPRING_PROFILES_ACTIVE: docker
+      OAUTH2_SECURITY_ENABLED: false
       KEYCLOAK_ISSUER_URI: http://keycloak:8100/realms/todo-list
     healthcheck:
       test: [ "CMD", "curl", "--silent", "--fail", "http://localhost:8080/backend/manage/health" ]
