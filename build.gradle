@@ -95,7 +95,7 @@ abstract class SeleniumTest extends Test {
 
         systemProperties["file.encoding"] = "UTF-8"
         systemProperties["selenide.browser"] = project.findProperty("browser") ?: "chrome"
-        systemProperties["selenide.browserVersion"] = "131.0"
+        systemProperties["selenide.browserVersion"] = "128.0"
         systemProperties["base-url"] = project.findProperty("base-url") ?: "http://todo-list.ru"
         systemProperties["chromeoptions.args"] = "--disable-web-security"
         outputs.upToDateWhen {false}
@@ -108,7 +108,9 @@ allure {
     }
 }
 
-tasks.register("selenide", SeleniumTest) {}
+tasks.register("selenide", SeleniumTest) {
+    systemProperties["selenide.browserVersion"] = "131.0"
+}
 
 tasks.register("selenoid", SeleniumTest) {
     systemProperties["selenide.remote"] = "http://localhost:4444/wd/hub"
