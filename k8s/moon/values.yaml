@@ -26,12 +26,12 @@ browsers:
     selenium:
       MicrosoftEdge:
         repository: quay.io/browser/microsoft-edge-stable
-        default: "125.0"
+        default: "131.0"
       chrome:
         repository: quay.io/browser/google-chrome-stable
-        default: "125.0"
+        default: "131.0"
       firefox:
         repository: quay.io/browser/firefox-mozilla-build
-        default: "125.0"
+        default: "131.0"
       opera: null
       safari: null

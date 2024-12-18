@@ -5,7 +5,7 @@ services:
     environment:
       BACKEND_HOST: backend-todo-list
     healthcheck:
-      test: "curl --fail http://localhost || exit 1"
+      test: [ "CMD-SHELL", "curl --fail http://localhost || exit 1" ]
       interval: 10s
       timeout: 5s
       retries: 5

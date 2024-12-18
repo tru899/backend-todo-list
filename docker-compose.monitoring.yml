@@ -19,15 +19,30 @@ services:
       cadvisor:
         condition: service_healthy
 
+  influxdb:
+    image: influxdb:1.11
+    container_name: influxdb
+    environment:
+      - INFLUXDB_DB=k6
+    ports:
+      - "8086:8086"
+    healthcheck:
+      test: [ "CMD-SHELL", "curl --fail http://localhost:8086/ping || exit 1" ]
+      interval: 5s
+      timeout: 10s
+      retries: 5
+    volumes:
+      - influxdb:/var/lib/influxdb
+
   cadvisor:
     image: gcr.io/cadvisor/cadvisor:v0.46.0
     container_name: cadvisor
     ports:
       - "8480:8080"
     healthcheck:
-      test: [ "CMD", "curl", "-f", "http://localhost:8080/healthz" ]
-      interval: 5s
-      timeout: 10s
+      test: [ "CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:8080/healthz" ]
+      interval: 10s
+      timeout: 5s
       retries: 5
     volumes:
       - /:/rootfs:ro
@@ -61,4 +76,5 @@ services:
 
 volumes:
   prometheus:
+  influxdb:
   grafana:

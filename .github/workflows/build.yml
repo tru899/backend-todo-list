@@ -107,7 +107,7 @@ jobs:
               up -d --wait
 
       - name: Pull Chrome image
-        run: docker pull selenoid/vnc:chrome_125.0
+        run: docker pull selenoid/vnc:chrome_131.0
 
       - name: Run Selenium Tests
         timeout-minutes: 5

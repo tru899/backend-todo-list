@@ -95,7 +95,7 @@ abstract class SeleniumTest extends Test {
 
         systemProperties["file.encoding"] = "UTF-8"
         systemProperties["selenide.browser"] = project.findProperty("browser") ?: "chrome"
-        systemProperties["selenide.browserVersion"] = "125.0"
+        systemProperties["selenide.browserVersion"] = "131.0"
         systemProperties["base-url"] = project.findProperty("base-url") ?: "http://todo-list.ru"
         systemProperties["chromeoptions.args"] = "--disable-web-security"
         outputs.upToDateWhen {false}
