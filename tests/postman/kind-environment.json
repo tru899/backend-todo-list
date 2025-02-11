@@ -4,7 +4,7 @@
   "values": [
     {
       "key": "baseUrl",
-      "value": "http://todo-list.ru/backend",
+      "value": "http://todo-list.local/backend",
       "enabled": true
     },
     {

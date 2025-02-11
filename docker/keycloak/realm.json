@@ -524,7 +524,7 @@
     "alwaysDisplayInConsole" : false,
     "clientAuthenticatorType" : "client-secret",
     "secret" : "sJk0f1ZjftWyyrwHFGIIfarqt1DFDedC",
-    "redirectUris" : [ "http://todo-list.ru/backend/login/oauth2/code/keycloak" ],
+    "redirectUris" : [ "http://todo-list.local/backend/login/oauth2/code/keycloak" ],
     "webOrigins" : [ "http://localhost:8080" ],
     "notBefore" : 0,
     "bearerOnly" : false,

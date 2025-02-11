@@ -17,4 +17,4 @@ services:
     networks:
       default:
         aliases:
-          - todo-list.ru
+          - todo-list.local

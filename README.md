@@ -29,7 +29,7 @@ $ docker compose \
     -f docker-compose.frontend.yml \
     up -d --wait
 
-$ echo "127.0.0.1    todo-list.ru" | sudo tee -a /etc/hosts
+$ echo "127.0.0.1    todo-list.local" | sudo tee -a /etc/hosts
 ```
 
 ### Запуск в локальном кластере k8s
@@ -39,7 +39,7 @@ $ echo "127.0.0.1    todo-list.ru" | sudo tee -a /etc/hosts
 ```shell
 $ kind create cluster --config kind.yml
 $ kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/main/deploy/static/provider/kind/deploy.yaml
-$ echo "127.0.0.1    todo-list.ru" | sudo tee -a /etc/hosts
+$ echo "127.0.0.1    todo-list.local" | sudo tee -a /etc/hosts
 
 ```
 
@@ -48,7 +48,7 @@ $ echo "127.0.0.1    todo-list.ru" | sudo tee -a /etc/hosts
 ```shell
 $ minikube start --vm-driver=hyperkit --memory=8G --cpus=3
 $ minikube addons enable ingress
-$ echo "$(minikube ip)    todo-list.ru" | sudo tee -a /etc/hosts
+$ echo "$(minikube ip)    todo-list.local" | sudo tee -a /etc/hosts
 
 ```
 
@@ -110,7 +110,8 @@ $ echo "$(minikube ip)    grafana.local" | sudo tee -a /etc/hosts
 
 $ brew install k6
 $ K6_WEB_DASHBOARD=true K6_WEB_DASHBOARD_EXPORT=report.html k6 run \
-    -e HOSTNAME=todo-list.ru \
+    --out influxdb=http://localhost:32086/k6 \
+    -e HOSTNAME=todo-list.local \
     -e USERNAME=ronin@romanow-alex.ru \
     -e PASSWORD=Qwerty123 \
     -e CLIENT_ID=7uHBa1xYenYPjX7UhOonuGhOWvxLUwYM \
