@@ -1,5 +1,6 @@
 package ru.romanow.todolist.service
 
+import io.micrometer.core.annotation.Timed
 import org.springframework.data.domain.Example
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
@@ -15,11 +16,13 @@ class TodoListServiceImpl(
     private val itemRepository: ItemRepository
 ) : TodoListService {
 
+    @Timed("find-all")
     @Transactional(readOnly = true)
     override fun findAll(userId: String) = itemRepository
         .findAll(Example.of(Item(userId = userId)))
         .map { ListItem(uid = it.id!!, text = it.text!!) }
 
+    @Timed("create")
     @Transactional
     override fun create(userId: String, request: CreateItemRequest) {
         val id = request.uid
@@ -30,6 +33,7 @@ class TodoListServiceImpl(
         itemRepository.save(item)
     }
 
+    @Timed("delete")
     @Transactional
     override fun delete(userId: String, uid: UUID) {
         if (itemRepository.exists(Example.of(Item(id = uid, userId = userId)))) {

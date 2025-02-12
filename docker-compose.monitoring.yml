@@ -1,6 +1,6 @@
 services:
   prometheus:
-    image: prom/prometheus:v2.40.0
+    image: prom/prometheus:v2.43.1
     container_name: prometheus
     command:
       - "--config.file=/etc/prometheus/prometheus.yml"
@@ -50,8 +50,26 @@ services:
       - /var/lib/docker/:/var/lib/docker:ro
       - /var/run/docker.sock:/var/run/docker.sock:rw
 
+  node-exporter:
+    image: prom/node-exporter:v1.8.1
+    container_name: node-exporter
+    command:
+      - '--path.procfs=/host/proc'
+      - '--path.rootfs=/rootfs'
+      - '--path.sysfs=/host/sys'
+      - '--collector.filesystem.mount-points-exclude=^/(sys|proc|dev|host|etc)($$|/)'
+    ports:
+      - "9100:9100"
+    volumes:
+      - /proc:/host/proc:ro
+      - /sys:/host/sys:ro
+      - /:/rootfs:ro
+    depends_on:
+      prometheus:
+        condition: service_healthy
+
   grafana:
-    image: grafana/grafana:8.3.4
+    image: grafana/grafana:11.4.1
     container_name: grafana
     environment:
       - GF_AUTH_ANONYMOUS_ENABLED=true
