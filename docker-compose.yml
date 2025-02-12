@@ -24,8 +24,8 @@ services:
     restart: on-failure
     environment:
       SPRING_PROFILES_ACTIVE: docker,auth0
-      OAUTH2_SECURITY_ENABLED: true
-      KEYCLOAK_ISSUER_URI: http://keycloak:8100/realms/todo-list
+      OAUTH2_SECURITY_ENABLED: ${OAUTH2_SECURITY_ENABLED:-true}
+      TRACING_ENABLED: ${TRACING_ENABLED:-false}
     healthcheck:
       test: [ "CMD", "curl", "--silent", "--fail", "http://localhost:8080/backend/manage/health" ]
       interval: 10s

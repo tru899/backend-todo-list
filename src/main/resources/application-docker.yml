@@ -13,7 +13,9 @@ oauth2:
     redirect-uri: http://todo-list.local/
 
 management:
-  otlp.tracing.endpoint: ${TRACING_ENDPOINT:http://jaeger:4318/v1/traces}
+  otlp:
+    tracing:
+      endpoint: ${TRACING_ENDPOINT:http://jaeger:4318/v1/traces}
 
 logging:
   pattern:

@@ -16,8 +16,13 @@ server:
         max-age: 86400
 
 management:
+  otlp:
+    tracing:
+      endpoint: ${COLLECTOR_ENDPOINT:http://localhost:4318/v1/traces}
   tracing:
     enabled: ${TRACING_ENABLED:false}
+    sampling:
+      probability: 1.0
   credentials:
     user: management
     password: test
@@ -33,6 +38,10 @@ management:
     application: ${spring.application.name}
   endpoint.health.show-details: always
   info.git.mode: simple
+  metrics:
+    distribution:
+      percentiles-histogram:
+        http.server.requests: true
   health:
     readinessstate.enabled: true
     livenessstate.enabled: true
