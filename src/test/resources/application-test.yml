@@ -1,12 +1,3 @@
-spring:
-  security:
-    oauth2:
-      client:
-        registration:
-          google:
-            client-id: client
-            client-secret: secret
-
 oauth2:
   security:
     enabled: false

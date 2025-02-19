@@ -121,6 +121,6 @@ class SecurityConfiguration(
         private const val FIRST = 1
         private const val SECOND = 2
         private const val THIRD = 3
-        private val PROVIDERS = listOf("google", "auth0", "keycloak")
+        private val PROVIDERS = listOf("auth0", "keycloak")
     }
 }

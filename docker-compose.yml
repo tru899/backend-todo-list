@@ -19,7 +19,7 @@ services:
 
   backend-todo-list:
     build: .
-    image: romanowalex/backend-todo-list:v2.2
+    image: romanowalex/backend-todo-list:${VERSION}
     container_name: backend-todo-list
     restart: on-failure
     environment:

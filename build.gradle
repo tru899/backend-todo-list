@@ -5,7 +5,7 @@ plugins {
     id "org.jetbrains.kotlin.plugin.jpa" version "1.9.25"
     id "org.jetbrains.kotlin.plugin.spring" version "1.9.25"
     id "org.jetbrains.kotlin.kapt" version "1.9.25"
-    id "org.springframework.boot" version "3.3.4"
+    id "org.springframework.boot" version "3.4.2"
     id "io.spring.dependency-management" version "1.1.7"
     id "org.jlleitschuh.gradle.ktlint" version "12.1.1"
     id "com.gorylenko.gradle-git-properties" version "2.4.2"
@@ -15,9 +15,9 @@ plugins {
 
 ext {
     jwtVersion = "4.2.1"
-    openApiVersion = "2.6.0"
-    selenideVersion = "7.2.3"
-    allureSelenideVersion = "2.27.0"
+    openApiVersion = "2.7.0"
+    selenideVersion = "7.6.1"
+    allureSelenideVersion = "2.29.1"
     postgresContainerVersion = "1.20.4"
 }
 
