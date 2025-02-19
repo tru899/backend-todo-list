@@ -3,14 +3,16 @@ on:
   push:
     branches:
       - master
+      - dependabot/**
     paths:
-      - ".github/**"
-      - "src/**"
-      - "tests/**"
-      - "Dockerfile"
-      - "docker-compose.yml"
-      - "build.gradle"
-      - "gradle.properties"
+      - .github/**
+      - src/**
+      - tests/**
+      - Dockerfile
+      - docker-compose.yml
+      - build.gradle
+      - gradle.properties
+
 jobs:
   build:
     name: Build

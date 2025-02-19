@@ -1,6 +1,5 @@
 package ru.romanow.todolist.config
 
-import org.springframework.boot.actuate.autoconfigure.security.servlet.EndpointRequest.toAnyEndpoint
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty
 import org.springframework.boot.autoconfigure.security.oauth2.client.OAuth2ClientProperties
 import org.springframework.boot.context.properties.EnableConfigurationProperties
@@ -47,9 +46,9 @@ class SecurityConfiguration(
     @Order(SECOND)
     fun managementSecurityFilterChain(http: HttpSecurity): SecurityFilterChain {
         return http
-            .securityMatcher(toAnyEndpoint())
+            .securityMatcher("/manage/**", "/api-docs")
             .authorizeHttpRequests {
-                it.requestMatchers("/manage/health/**", "/manage/prometheus")
+                it.requestMatchers("/manage/health/**", "/manage/prometheus", "/api-docs")
                     .permitAll()
                     .anyRequest().hasRole(actuatorSecurityProperties.role)
             }
