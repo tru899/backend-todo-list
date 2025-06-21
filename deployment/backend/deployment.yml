@@ -1,1 +1,43 @@
-
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend-todo
+  namespace: practice
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: backend-todo
+  template:
+    metadata:
+      labels:
+        app: backend-todo
+    spec:
+      containers:
+        - name: backend-todo
+          image: ghcr.io/tfk70/testtodo:1.0
+          imagePullPolicy: IfNotPresent
+          resources:
+            limits:
+              cpu: 1000m
+              memory: 1Gi
+            requests:
+              cpu: 100m
+              memory: 128Mi
+          ports:
+            - containerPort: 8080
+              name: http
+              protocol: TCP
+          env:
+            - name: SPRING_PROFILES_ACTIVE
+              value: do
+            - name: DATABASE_USER
+              value: program
+            - name: DATABASE_PASSWORD
+              value: test
+            - name: DATABASE_PORT
+              value: '5432'
+            - name: DATABASE_URL
+              value: postgres.practice.svc.cluster.local
+            - name: DATABASE_NAME
+              value: todo_list
