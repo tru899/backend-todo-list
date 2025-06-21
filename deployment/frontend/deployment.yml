@@ -1,1 +1,22 @@
-
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend-deployment
+  namespace: practice
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: frontend-todo
+  template:
+    metadata:
+      labels:
+        app: frontend-todo
+    spec:
+      containers:
+      - name: frontend-todo
+        image: ghcr.io/tru899/frontend-todo:v1.0
+        ports:
+        - containerPort: 80
+      imagePullSecrets:
+      - name: ghcr-pull-secret
